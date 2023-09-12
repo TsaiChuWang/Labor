@@ -4,6 +4,27 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+#ifndef _DEBUG_COLOR_
+#define _DEBUG_COLOR_
+    #define KDRK "\x1B[0;30m"
+    #define KGRY "\x1B[1;30m"
+    #define KRED "\x1B[0;31m"
+    #define KRED_L "\x1B[1;31m"
+    #define KGRN "\x1B[0;32m"
+    #define KGRN_L "\x1B[1;32m"
+    #define KYEL "\x1B[0;33m"
+    #define KYEL_L "\x1B[1;33m"
+    #define KBLU "\x1B[0;34m"
+    #define KBLU_L "\x1B[1;34m"
+    #define KMAG "\x1B[0;35m"
+    #define KMAG_L "\x1B[1;35m"
+    #define KCYN "\x1B[0;36m"
+    #define KCYN_L "\x1B[1;36m"
+    #define WHITE "\x1B[0;37m"
+    #define WHITE_L "\x1B[1;37m"
+    #define RESET "\x1B[0m"
+#endif
+
 int main() {
     int client_socket;
     struct sockaddr_in server_addr;
@@ -17,6 +38,7 @@ int main() {
     
     // Set up server information
     memset(&server_addr, 0, sizeof(server_addr));
+
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(8080); // Server's port number
     server_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); // Server's IP address
@@ -27,11 +49,8 @@ int main() {
         exit(EXIT_FAILURE);
     }
     
-    printf("Connected to server\n");
+    printf(KYEL"Connected to server\n");
 
-    // Send and receive data here
-    
-    // Close the socket when done
     close(client_socket);
     
     return 0;

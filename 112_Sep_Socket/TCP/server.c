@@ -4,6 +4,28 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+#ifndef _DEBUG_COLOR_
+#define _DEBUG_COLOR_
+    #define KDRK "\x1B[0;30m"
+    #define KGRY "\x1B[1;30m"
+    #define KRED "\x1B[0;31m"
+    #define KRED_L "\x1B[1;31m"
+    #define KGRN "\x1B[0;32m"
+    #define KGRN_L "\x1B[1;32m"
+    #define KYEL "\x1B[0;33m"
+    #define KYEL_L "\x1B[1;33m"
+    #define KBLU "\x1B[0;34m"
+    #define KBLU_L "\x1B[1;34m"
+    #define KMAG "\x1B[0;35m"
+    #define KMAG_L "\x1B[1;35m"
+    #define KCYN "\x1B[0;36m"
+    #define KCYN_L "\x1B[1;36m"
+    #define WHITE "\x1B[0;37m"
+    #define WHITE_L "\x1B[1;37m"
+    #define RESET "\x1B[0m"
+#endif
+
+
 int main() {
     int server_socket, client_socket;
     struct sockaddr_in server_addr, client_addr;
@@ -33,7 +55,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
     
-    printf("Server listening on port 8080...\n");
+    printf(KCYN"Server listening on port 8080...\n");
     
     // Accept incoming connection
     client_socket = accept(server_socket, (struct sockaddr*)&client_addr, &client_addr_len);
@@ -42,7 +64,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
     
-    printf("Client connected\n");
+    printf(KYEL"Client connected\n");
 
     // Send and receive data here
     
