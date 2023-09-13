@@ -53,3 +53,15 @@ Switch
 - Refresh topology every 5s
 
 # **Making a routing decision**
+
+![Topology_Year1_Tutorial.pptx.png](images/Topology_Year1_Tutorial.pptx%202.png)
+
+Routing method
+
+## Shortest path algorithm
+
+- Dijkstra’s Algorithm
+
+## Load balancing routing decision
+
+- Using residual capacity to decide a best path for routing
