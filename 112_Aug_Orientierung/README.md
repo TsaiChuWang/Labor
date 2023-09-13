@@ -42,3 +42,14 @@ Um es ganz klar auszudrücken: Dieses Experiment wurde von meinen Vorgesetzten a
 - Querying switch features when switch connected to controller
 - Monitoring flow and port statistics every 5s
 - Receiving port status when switch ports changing happened
+
+# **Topology discovery**
+
+![Topology_Year1_Tutorial.pptx.png](images/Topology_Year1_Tutorial.pptx%201.png)
+
+- Using topology discovery protocol (LLDP) to discovery the network topology
+Switch
+    - Link/connection …
+- Refresh topology every 5s
+
+# **Making a routing decision**
