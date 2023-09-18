@@ -3,32 +3,50 @@
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <netinet/ip.h>
+#include <netinet/if_ether.h>
+#include <arpa/inet.h>
 
 #define BUFFER_SIZE 1024
-#define TARGET_IP "127.0.0.1"  // Replace with the target server IP
-#define TARGET_PORT 1996      // Replace with the target server port
+#define TARGET_IP "127.0.0.1" 
+#define TARGET_PORT 1996     
+
+/* FILTER : word that do not appear */
 #define FILTEREDWORD "eeff"
 #define SIZE_FILTEREDWORD 4
+
+/* REPLACED : word that be replaced to another word */
 #define REPLACEDWORD "aabb"
 #define SIZE_REPLACEDWORD 4
 #define CHANGEWORD "ccdd"
+
+/* EXIT : Word that tells close the process*/
+#define EXITWORD "exit"
+#define SIZE_EXITWORD 4
+
+/* Status code */
 #define TRUE 1
 #define FALSE 0
 #define ERROR -1
 
+/* Code that indicate how to handle the payload*/
 #define FILTER 1
+#define REPLACE 2
+#define NOTHING 0
+#define EXIT -1
 
-void process_packet(int proxy_socket);
+void process_packet(int proxy_socket,int* code);
 
+/* payload handle */
 char* payload_handle(char* origin_payload,int size_origin_payload,int* code);
 int checkIfitKeyword(char* origin_payload,int size_origin_payload);
 void checkfilterAndChange(char* origin_payload,int size_origin_payload,int* code);
+void checkIfItExit(char* origin_payload,int size_origin_payload,int* code);
 
 int main() {
     int proxy_socket;
     struct sockaddr_in proxy_addr;
 
-    // Create a socket
     proxy_socket = socket(AF_INET, SOCK_DGRAM, 0);
     if (proxy_socket == -1) {
         perror("Socket creation is failed");
@@ -51,35 +69,51 @@ int main() {
     printf("Proxy server is running. Listening for incoming packets...\n");
 
     while (TRUE) {
-        process_packet(proxy_socket);
+        int code =0;
+        process_packet(proxy_socket,&code);
+
+        if(code == EXIT)
+            exit(0);
     }
 
     close(proxy_socket);
     return 0;
 }
 
-void process_packet(int proxy_socket) {
+void process_packet(int proxy_socket,int* code) {
     struct sockaddr_in client_addr;
     socklen_t addr_len = sizeof(client_addr);
     char buffer[BUFFER_SIZE];
 
-    // Receive packet from client
     int recv_size = recvfrom(proxy_socket, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&client_addr, &addr_len);
+    
+    struct ether_header* eth_header = (struct ether_header*)buffer;
+    struct iphdr* ipheader_pointer;
+
+    struct in_addr source_ip_address;
+    source_ip_address.s_addr = ipheader_pointer->saddr;
+
+    // Convert the binary IP to a human-readable string
+    char source_ip_address_string[INET_ADDRSTRLEN];
+    inet_ntop(AF_INET, &(source_ip_address), source_ip_address_string, INET_ADDRSTRLEN);
 
     if (recv_size < 0) {
         perror("Packet receive failed");
         return;
     }
 
-    // Null-terminate the received data
     *(buffer+recv_size-1) = '\0';
 
-    int code = 0;
-    char* s =payload_handle(buffer,recv_size,&code);
-    printf("code = %d for %10s\n",code,s);
+    char* string = payload_handle(buffer, recv_size, code);
 
-    if(code == FILTER)
-        continue;
+    if(*code == FILTER)
+        return;
+    if(*code == REPLACE)
+        printf("[%15s] : %s \n", source_ip_address_string, string);
+    if(*code == NOTHING)
+        printf("[%15s] : %s \n" ,source_ip_address_string, string);
+    if(*code == EXIT)
+        printf("\x1B[0;31m""[%15s] : %s \n",source_ip_address_string,string);
 }
 
 char* payload_handle(char* origin_payload, int size_origin_payload, int* code){
@@ -89,16 +123,17 @@ char* payload_handle(char* origin_payload, int size_origin_payload, int* code){
     if(size_origin_payload < sizeof(FILTEREDWORD) && size_origin_payload <sizeof(REPLACEDWORD))
         return origin_payload;
 
-    if(checkIfitKeyword(origin_payload,size_origin_payload) == TRUE){
-        *code = 1;
+    *code = checkIfitKeyword(origin_payload,size_origin_payload);
+    if(*code == FILTER)
         return "";
-    }else{
-        checkfilterAndChange(origin_payload,size_origin_payload,code);
 
-        
-    }
-        
-    printf("%s + %s + %d \n",origin_payload,FILTEREDWORD,checkIfitKeyword(origin_payload,size_origin_payload));
+    checkfilterAndChange(origin_payload,size_origin_payload,code);
+    if(*code == REPLACE)
+        return origin_payload;
+
+    checkIfItExit(origin_payload,size_origin_payload,code);
+    if(*code == EXIT)
+        return "EXIT";
 
     return origin_payload;
 }
@@ -118,7 +153,6 @@ int checkIfitKeyword(char* origin_payload,int size_origin_payload){
             check = TRUE;
             for(int j = 0; j < SIZE_FILTEREDWORD; j++){
                 check = (*(origin_payload+index+j) == *(FILTEREDWORD + j));
-                // printf("index= %d original = %c filter = %c check = %d\n",index+j,*(origin_payload+index+j),*(FILTEREDWORD + j),check);
                 if(check == 0) break;
             }
             if(check)
@@ -130,7 +164,7 @@ int checkIfitKeyword(char* origin_payload,int size_origin_payload){
 
 void checkfilterAndChange(char* origin_payload,int size_origin_payload,int* code){
     char first = *REPLACEDWORD;
-    char* substring = (char*)malloc(sizeof(char)*(REPLACEDWORD+1));
+    char* substring = (char*)malloc(sizeof(char)*(SIZE_REPLACEDWORD+1));
     memset(substring, '\0', sizeof(substring));
 
     int check = FALSE;
@@ -138,20 +172,32 @@ void checkfilterAndChange(char* origin_payload,int size_origin_payload,int* code
     for(int index =0;index<size_origin_payload;index++){
         if(*(origin_payload + index) == first)
         {
-            if(index > size_origin_payload - REPLACEDWORD - 1)
+            if(index > size_origin_payload - SIZE_REPLACEDWORD - 1)
                 return;
 
             check = TRUE;
             for(int j = 0; j < SIZE_REPLACEDWORD; j++){
                 check = (*(origin_payload+index+j) == *(REPLACEDWORD + j));
-                // printf("index= %d original = %c filter = %c check = %d\n",index+j,*(origin_payload+index+j),*(FILTEREDWORD + j),check);
                 if(check == 0) break;
             }
             if(check){
-                *code = 2;
+                *code = REPLACE;
                 for(int j = 0; j < SIZE_REPLACEDWORD; j++)
                     *(origin_payload+index+j) = *(CHANGEWORD+j);
             }
         }
     }
+}
+
+void checkIfItExit(char* origin_payload,int size_origin_payload,int* code){
+    if(size_origin_payload > SIZE_EXITWORD+1)
+        return ;
+    
+    int check = TRUE;
+    for(int index=0;index <SIZE_EXITWORD ;index++){
+        check = check & (*(origin_payload+index) == *(EXITWORD+index));
+        if(check == FALSE) break;
+    }
+    if(check ==TRUE)
+        *code = EXIT;
 }
