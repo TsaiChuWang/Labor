@@ -117,3 +117,21 @@ ping 8.8.8.8
 ![Untitled](images/Untitled%204.png)
 
 [https://sites.uclouvain.be/SystInfo/usr/include/netinet/ip_icmp.h.html](https://sites.uclouvain.be/SystInfo/usr/include/netinet/ip_icmp.h.html)
+
+# Execution 2
+
+```c
+gcc ICMP.c -o ./ICMP
+sudo ./ICMP
+```
+
+![Untitled](images/Untitled%205.png)
+
+## Unavaliable IP and avaliable IP
+
+```c
+ping 192.168.1.1 -c 5
+ping 8.8.8.8 -c 5
+```
+
+![Untitled](images/Untitled%206.png)
