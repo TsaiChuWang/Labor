@@ -8,11 +8,21 @@
 #define TARGET_IP "127.0.0.1"  // Replace with the target server IP
 #define TARGET_PORT 1996      // Replace with the target server port
 #define FILTEREDWORD "eeff"
-#define REPLACEDWORD "eeff"
+#define SIZE_FILTEREDWORD 4
+#define REPLACEDWORD "aabb"
+#define SIZE_REPLACEDWORD 4
+#define CHANGEWORD "ccdd"
+#define TRUE 1
+#define FALSE 0
+#define ERROR -1
+
+#define FILTER 1
 
 void process_packet(int proxy_socket);
 
-char* payload_handle(char* origin_payload,int size_origin_payload);
+char* payload_handle(char* origin_payload,int size_origin_payload,int* code);
+int checkIfitKeyword(char* origin_payload,int size_origin_payload);
+void checkfilterAndChange(char* origin_payload,int size_origin_payload,int* code);
 
 int main() {
     int proxy_socket;
@@ -40,7 +50,7 @@ int main() {
 
     printf("Proxy server is running. Listening for incoming packets...\n");
 
-    while (1) {
+    while (TRUE) {
         process_packet(proxy_socket);
     }
 
@@ -62,30 +72,86 @@ void process_packet(int proxy_socket) {
     }
 
     // Null-terminate the received data
-    *(buffer+recv_size) = '\0';
+    *(buffer+recv_size-1) = '\0';
 
-    char* s =payload_handle(buffer,recv_size);
+    int code = 0;
+    char* s =payload_handle(buffer,recv_size,&code);
+    printf("code = %d for %10s\n",code,s);
 
-    // Filter keywords (e.g., "filterme")
-    // if (strstr(buffer, "filterme") != NULL) {
-    //     printf("Filtered keyword detected: %s\n", buffer);
-    // } else {
-    //     printf("Forwarding packet to target server: %s\n", buffer);
-
-    //     // Forward valid packets to target server
-    //     struct sockaddr_in target_addr;
-    //     target_addr.sin_family = AF_INET;
-    //     target_addr.sin_port = htons(TARGET_PORT);
-    //     target_addr.sin_addr.s_addr = inet_addr(TARGET_IP);
-
-    //     sendto(proxy_socket, buffer, recv_size, 0, (struct sockaddr *)&target_addr, sizeof(target_addr));
-    // }
+    if(code == FILTER)
+        continue;
 }
 
-char* payload_handle(char* origin_payload,int size_origin_payload){
+char* payload_handle(char* origin_payload, int size_origin_payload, int* code){
     char* handled_payload = (char*)malloc(sizeof(char)*size_origin_payload);
     memset(handled_payload, '\0', sizeof(handled_payload));
-    printf("%s + %s\n",origin_payload,FILTEREDWORD);
 
-    return handled_payload;
+    if(size_origin_payload < sizeof(FILTEREDWORD) && size_origin_payload <sizeof(REPLACEDWORD))
+        return origin_payload;
+
+    if(checkIfitKeyword(origin_payload,size_origin_payload) == TRUE){
+        *code = 1;
+        return "";
+    }else{
+        checkfilterAndChange(origin_payload,size_origin_payload,code);
+
+        
+    }
+        
+    printf("%s + %s + %d \n",origin_payload,FILTEREDWORD,checkIfitKeyword(origin_payload,size_origin_payload));
+
+    return origin_payload;
+}
+
+int checkIfitKeyword(char* origin_payload,int size_origin_payload){
+    char first = *FILTEREDWORD;
+    char* substring = (char*)malloc(sizeof(char)*sizeof(FILTEREDWORD));
+    memset(substring, '\0', sizeof(substring));
+    int check = FALSE;
+
+    for(int index =0;index<size_origin_payload;index++){
+        if(*(origin_payload + index) == first)
+        {
+            if(index > size_origin_payload - SIZE_FILTEREDWORD - 1)
+                return FALSE;
+
+            check = TRUE;
+            for(int j = 0; j < SIZE_FILTEREDWORD; j++){
+                check = (*(origin_payload+index+j) == *(FILTEREDWORD + j));
+                // printf("index= %d original = %c filter = %c check = %d\n",index+j,*(origin_payload+index+j),*(FILTEREDWORD + j),check);
+                if(check == 0) break;
+            }
+            if(check)
+                return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+void checkfilterAndChange(char* origin_payload,int size_origin_payload,int* code){
+    char first = *REPLACEDWORD;
+    char* substring = (char*)malloc(sizeof(char)*(REPLACEDWORD+1));
+    memset(substring, '\0', sizeof(substring));
+
+    int check = FALSE;
+
+    for(int index =0;index<size_origin_payload;index++){
+        if(*(origin_payload + index) == first)
+        {
+            if(index > size_origin_payload - REPLACEDWORD - 1)
+                return;
+
+            check = TRUE;
+            for(int j = 0; j < SIZE_REPLACEDWORD; j++){
+                check = (*(origin_payload+index+j) == *(REPLACEDWORD + j));
+                // printf("index= %d original = %c filter = %c check = %d\n",index+j,*(origin_payload+index+j),*(FILTEREDWORD + j),check);
+                if(check == 0) break;
+            }
+            if(check){
+                *code = 2;
+                for(int j = 0; j < SIZE_REPLACEDWORD; j++)
+                    *(origin_payload+index+j) = *(CHANGEWORD+j);
+            }
+        }
+    }
 }
