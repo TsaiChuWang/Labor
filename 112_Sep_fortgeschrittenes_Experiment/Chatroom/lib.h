@@ -21,6 +21,7 @@
 #define TAG 1
 #define CREATE_GROUP 2
 #define JOIN_GROUP 3
+#define SEND_MESSAGE_GROUP 4
 
 #define PORT 2009
 

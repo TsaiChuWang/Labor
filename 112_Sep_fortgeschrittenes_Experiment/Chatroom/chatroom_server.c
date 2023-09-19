@@ -56,37 +56,33 @@ int findTargetClientByName(char* name);
 int checkIfJoinCreateGroup(char* message);
 
 /* Distinguish if it create or join the group */
-int distinguishIfJoinCreateGroup(char* group_name){
-	if(zahl_chat_groups == 0)
-		return NOT_FOUND;
-	
-	for(int index =0;index < zahl_chat_groups;index++){
-		struct group temperatur_group = *(chat_groups+index);
-		if(compareStringsIsSame(temperatur_group.group_name, group_name) ==TRUE)
-			return index;
-	}
-	return NOT_FOUND;
-}
+int distinguishIfJoinCreateGroup(char* group_name);
 
 /* find target client name by client socket_ID*/
-char* findTargetClientBySocketID(int socket_ID){
-	if(zahl_connected_client == 0)
-		return NAME_NOT_FOUND;
-	
-	for(int index=0;index< zahl_connected_client;index++){
-		struct client temperatur_client = *(connected_clients+index);
-		if(temperatur_client.client_socket == socket_ID)
-			return temperatur_client.cleint_name;
-	}
-	return NAME_NOT_FOUND;
-}
+char* findTargetClientBySocketID(int socket_ID);
 
 /* Check if socket_ID in the group */
-int checkIfSocketIDInGroup(int socket_ID, struct group target_group){
-	for(int index=0;index < target_group.zahl_mitglied;index++)
-		if(*(target_group.mitglied_socke_IDs+index) == socket_ID )
-			return index;
+int checkIfSocketIDInGroup(int socket_ID, struct group target_group);
 
+/* Get group name from message */
+char* getGroupNameByMessage(char* message, int end_index){
+	char* group_name = (char*)malloc(sizeof(char)*(end_index+1));
+	memset(group_name, '\0',sizeof(group_name));
+	for(int index=0;index<end_index;index++)
+		*(group_name+index)=*(message+index);
+	return group_name;
+}
+
+/* find group index by group name */
+int findCahtGroupIndexByName(char* group_name){
+	if(zahl_chat_groups == 0)
+		return NOT_FOUND;
+
+	for(int index=0;index<zahl_chat_groups;index++){
+		struct group temperatur_group = *(chat_groups+index);
+		if(compareStringsIsSame(temperatur_group.group_name,group_name) == TRUE)
+			return index;
+	}
 	return NOT_FOUND;
 }
 
@@ -209,8 +205,12 @@ void payloadHandling(int transmitter,char* payload,char* time_str){
 			return;
 		}
 
-		printf("client %15s[%2d] wants send message to a group,from index %3d\n",name, transmitter,if_join_or_create);
 		/* Send message to the group */
+		char* target_group_name = getGroupNameByMessage(message, if_join_or_create);
+		target_chat_group = findCahtGroupIndexByName(target_group_name);
+		sending_mode = SEND_MESSAGE_GROUP;
+		
+		printf(KYEL"client %15s[%2d] wants send message %s to a group %s,from index %3d\n", name, transmitter, message, target_chat_group);
 		// printf("")
 	}
 }
@@ -227,6 +227,7 @@ void* fsend(void* sockfd)
 		if(new_message==0 && sent==1)	sent=0;	// reset sent
 		else if(new_message==1 && sent==0 && sent_clientfd!=*(int*)sockfd){
 			struct group target_group;
+			int is_in_group;
 
 			switch (sending_mode)
 			{
@@ -277,7 +278,51 @@ void* fsend(void* sockfd)
 				// 		printf(" %s[%3d]\n",findTargetClientBySocketID(*(target_group.mitglied_socke_IDs+index)),*(target_group.mitglied_socke_IDs+index));
 				// 	else printf(" %s[%3d],",findTargetClientBySocketID(*(target_group.mitglied_socke_IDs+index)),*(target_group.mitglied_socke_IDs+index));
 
-				int is_in_group = checkIfSocketIDInGroup(*(int*)sockfd, target_group);
+				is_in_group = checkIfSocketIDInGroup(*(int*)sockfd, target_group);
+				if(is_in_group != NOT_FOUND){
+					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
+					bzero(buff, MAX);
+					num_sent++;
+					sent=1;	
+					if(num_sent == num_client-1){ // last thread that hasn't sent runs
+						bzero(ShareM, MAX); // reset Share memory
+						num_sent=0;
+						new_message=0;
+					}
+					printf("client %15s[%d] is in the group %s\n", findTargetClientBySocketID(*(int*)sockfd), *(int*)sockfd, target_group.group_name);
+				}else{
+					num_sent=0;
+					new_message=0;
+					if(num_sent == num_client-1){ // last thread that hasn't sent runs
+						bzero(ShareM, MAX); // reset Share memory
+						num_sent=0;
+						new_message=0;
+					}
+					printf("client %15s[%d] is not in the group %s\n", findTargetClientBySocketID(*(int*)sockfd), *(int*)sockfd, target_group.group_name);
+				}
+				break;
+			case SEND_MESSAGE_GROUP:
+				target_group = *(chat_groups + target_chat_group);
+				printf(KYEL"Mode :%2d, now broadcast to group %3d named %s\n", sending_mode, target_chat_group, target_group.group_name);
+
+				// send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
+				// bzero(buff, MAX);
+				// num_sent++;
+				// sent=1;	
+				// if(num_sent == num_client-1){ // last thread that hasn't sent runs
+				// 	bzero(ShareM, MAX); // reset Share memory
+				// 	num_sent=0;
+				// 	new_message=0;
+				// }
+
+				printf("Share memory :%s\n",ShareM);
+				printf("This group has %3d members :",target_group.zahl_mitglied);
+				for(int index=0;index<target_group.zahl_mitglied;index++)
+					if(index == target_group.zahl_mitglied-1)
+						printf(" %s[%3d]\n",findTargetClientBySocketID(*(target_group.mitglied_socke_IDs+index)),*(target_group.mitglied_socke_IDs+index));
+					else printf(" %s[%3d],",findTargetClientBySocketID(*(target_group.mitglied_socke_IDs+index)),*(target_group.mitglied_socke_IDs+index));
+
+				is_in_group = checkIfSocketIDInGroup(*(int*)sockfd, target_group);
 				if(is_in_group != NOT_FOUND){
 					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
 					bzero(buff, MAX);
@@ -504,3 +549,34 @@ int checkIfJoinCreateGroup(char* message){
 	return NOT_FOUND;
 }
 
+int distinguishIfJoinCreateGroup(char* group_name){
+	if(zahl_chat_groups == 0)
+		return NOT_FOUND;
+	
+	for(int index =0;index < zahl_chat_groups;index++){
+		struct group temperatur_group = *(chat_groups+index);
+		if(compareStringsIsSame(temperatur_group.group_name, group_name) ==TRUE)
+			return index;
+	}
+	return NOT_FOUND;
+}
+
+char* findTargetClientBySocketID(int socket_ID){
+	if(zahl_connected_client == 0)
+		return NAME_NOT_FOUND;
+	
+	for(int index=0;index< zahl_connected_client;index++){
+		struct client temperatur_client = *(connected_clients+index);
+		if(temperatur_client.client_socket == socket_ID)
+			return temperatur_client.cleint_name;
+	}
+	return NAME_NOT_FOUND;
+}
+
+int checkIfSocketIDInGroup(int socket_ID, struct group target_group){
+	for(int index=0;index < target_group.zahl_mitglied;index++)
+		if(*(target_group.mitglied_socke_IDs+index) == socket_ID )
+			return index;
+
+	return NOT_FOUND;
+}
