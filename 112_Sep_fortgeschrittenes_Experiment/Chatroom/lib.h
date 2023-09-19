@@ -10,7 +10,10 @@
 #include <semaphore.h> 
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <stdarg.h>
 #define MAX 80
+
+#define TIME_LENGTH 50
 
 #define TRUE 1
 #define FALSE 0
@@ -23,10 +26,12 @@
 #define JOIN_GROUP 3
 #define SEND_MESSAGE_GROUP 4
 
-#define PORT 2009
+#define PORT 2012
 
 #define ALLWORD "ALL"
 #define ALLWORD_LENGTH 3
+
+#define FILENAME "./log.txt"
 
 #ifndef _DEBUG_COLOR_
 #define _DEBUG_COLOR_
