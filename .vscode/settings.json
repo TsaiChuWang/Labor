@@ -5,7 +5,11 @@
         "ip_icmp.h": "c",
         "inet.h": "c",
         "random": "c",
+<<<<<<< HEAD
         "unistd.h": "c",
         "typeinfo": "c"
+=======
+        "unistd.h": "c"
+>>>>>>> c23b14f15a86e3e5831642244e1f66728801972c
     }
 }

@@ -60,9 +60,15 @@ void* frecv(void* sockfd)
 		if(*(buff) == '0'){
 			changeTheChar(buff,size);
 			char* c=formattime(time_str);
+<<<<<<< HEAD
 			printf("\x1B[1;31m\n[%s] %s",c, buff); 
 		}else{
 			printf("\x1B[0m\n%s%s",time_str, buff); 
+=======
+			printf("\x1B[1;31m\n[%s] %s:",c, buff); 
+		}else{
+			printf("\x1B[0m\n%s%s:",time_str, buff); 
+>>>>>>> c23b14f15a86e3e5831642244e1f66728801972c
 		}
 		
 		
