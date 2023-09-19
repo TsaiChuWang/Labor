@@ -3,6 +3,7 @@
 #define MAX_CLIENTS 100
 #define MAX_GROUPS 100
 #define MAX_GROUPS_MEMBER 100
+#define MAX_NAME_LENGTH 15
 
 sem_t mutex; 
 char ShareM[MAX]; // Share memory
@@ -67,25 +68,32 @@ char* findTargetClientBySocketID(int socket_ID);
 int checkIfSocketIDInGroup(int socket_ID, struct group target_group);
 
 /* Get group name from message */
-char* getGroupNameByMessage(char* message, int end_index);
+char* getGroupNameByMessage(char* message, int end_index){
+	char* group_name = (char*)malloc(sizeof(char)*(end_index+1));
+	memset(group_name, '\0',sizeof(group_name));
+	for(int index=0;index<end_index;index++)
+		*(group_name+index)=*(message+index);
+	return group_name;
+}
 
 /* find group index by group name */
-int findCahtGroupIndexByName(char* group_name);
+int findCahtGroupIndexByName(char* group_name){
+	if(zahl_chat_groups == 0)
+		return NOT_FOUND;
+
+	for(int index=0;index<zahl_chat_groups;index++){
+		struct group temperatur_group = *(chat_groups+index);
+		if(compareStringsIsSame(temperatur_group.group_name,group_name) == TRUE)
+			return index;
+	}
+	return NOT_FOUND;
+}
 
 /* Handle the payload */
-void payloadHandling(int transmitter,char* payload,char* time_str);
+void payloadHandling(int transmitter,char* payload,char* time_str){
+	printf(WHITE_L"[%15s]Get payload from transmitter : %2d, %s",format_time_string(time_str), transmitter, payload);
 
-/* Record the information of server */
-void recordInformation(char* message,int reciever){
-    // const char* filename = "./log.txt";
-
-	char* recordInformationLine = (char*)malloc(sizeof(char)*1024);
-
-	char* time_str=(char*)malloc(TIME_LENGTH);
-	get_time(time_str);
-	strcat(recordInformationLine, format_time_string(time_str));
-	strcat(recordInformationLine, " [");
-
+	/* Get proccessed data name and message */
 	char* name;
 	int target_index = 0;
 	for(int index=0;index<strlen(message);index++)
@@ -100,7 +108,7 @@ void recordInformation(char* message,int reciever){
 		*(name+index) = *(message+index);
 
 	char* temeratur_information =(char*)malloc(sizeof(char)*(1024-TIME_LENGTH-2));
-	sprintf(temeratur_information, "%15s:%3d] - [%15s:%d] | %50s", name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
+	sprintf(temeratur_information, "%15s:%3d] - [%15s:%d] | %50s - \n", name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
 	strcat(recordInformationLine, temeratur_information);
 	FILE* file = fopen(FILENAME, "a");
 
@@ -115,24 +123,9 @@ void recordInformation(char* message,int reciever){
     // printf("String appended to %s\n", filename);
 }
 
-/* Record the server information */
-void recordServerInformation(char* message){
-	char* time_str=(char*)malloc(TIME_LENGTH);
-	get_time(time_str);
-	FILE* file = fopen(FILENAME, "a");
-
-	if(file == NULL)
-		perror("Error opening the file");
-	
-	fprintf(file, "[%s] %s", format_time_string(time_str), message);
-	printf(KBLU_L"[%s] %s", format_time_string(time_str), message); 
-
-    fclose(file);
-}
-
 void* fsend(void* sockfd) 
 {
-	char buffer[MAX]; 
+	char buff[MAX]; 
 	int sent=0; // set to one when this thread has already sent the new message
 	for (;;) { 
 		if(exit_clientfd == *(int*)sockfd){
@@ -147,9 +140,8 @@ void* fsend(void* sockfd)
 			switch (sending_mode)
 			{
 			case ALL:
-				// recordInformation(ShareM,*(int*)sockfd);
 				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buffer, MAX);
+				bzero(buff, MAX);
 				num_sent++;
 				sent=1;	
 				if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -162,7 +154,7 @@ void* fsend(void* sockfd)
 				if(*(int*)sockfd == target_recieved_client){
 					printf(KRED_L"Mode :%2d, send to client : %2d :%s\n",TAG, target_recieved_client, ShareM);
 					send(target_recieved_client , ShareM, sizeof(ShareM), 0); 
-					bzero(buffer, MAX);
+					bzero(buff, MAX);
 					num_sent++;
 					sent=1;	
 					if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -174,7 +166,7 @@ void* fsend(void* sockfd)
 				break;
 			case CREATE_GROUP:
 				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buffer, MAX);
+				bzero(buff, MAX);
 				num_sent++;
 				sent=1;	
 				if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -197,7 +189,7 @@ void* fsend(void* sockfd)
 				is_in_group = checkIfSocketIDInGroup(*(int*)sockfd, target_group);
 				if(is_in_group != NOT_FOUND){
 					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-					bzero(buffer, MAX);
+					bzero(buff, MAX);
 					num_sent++;
 					sent=1;	
 					if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -222,7 +214,7 @@ void* fsend(void* sockfd)
 				printf(KYEL"Mode :%2d, now broadcast to group %3d named %s\n", sending_mode, target_chat_group, target_group.group_name);
 
 				// send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				// bzero(buffer, MAX);
+				// bzero(buff, MAX);
 				// num_sent++;
 				// sent=1;	
 				// if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -241,7 +233,7 @@ void* fsend(void* sockfd)
 				is_in_group = checkIfSocketIDInGroup(*(int*)sockfd, target_group);
 				if(is_in_group != NOT_FOUND){
 					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-					bzero(buffer, MAX);
+					bzero(buff, MAX);
 					num_sent++;
 					sent=1;	
 					if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -263,7 +255,7 @@ void* fsend(void* sockfd)
 				break;
 			default:
 				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buffer, MAX);
+				bzero(buff, MAX);
 				num_sent++;
 				sent=1;	
 				if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -286,61 +278,52 @@ void* fsend(void* sockfd)
 
 void* frecv(void* sockfd) 
 {
-	char buffer[MAX];
-	char client_name[MAX];
+	char buff[MAX];
+	char name[MAX];
 	char* time_str;
 	time_str=(char*)malloc(50);
-	bzero(client_name,MAX);
-    int erst_ent=0;
+	bzero(name,MAX);
+    int first=0;
 
 	for(;;){		
-		bzero(buffer, MAX);
-		recv(*(int*)sockfd, buffer, sizeof(buffer), 0); 
-
-		if(buffer[0] == '\0'){
+		bzero(buff, MAX);
+		recv(*(int*)sockfd, buff, sizeof(buff), 0); 
+		if(buff[0]=='\0'){
 			exit_clientfd= *(int*)sockfd; // record exited clientfd
 			get_time(time_str);
-			printf("\n%s-------%s exit-------\n",time_str,client_name);			
+			printf("\n%s-------%s exit-------\n",time_str,name);			
 			break;
 		}
-		if(!erst_ent){
-			strcpy(client_name, buffer);	
+		if(!first){//fisrt message is the name of client
+			strcpy(name,buff);	
 			get_time(time_str);
-
-			erst_ent = TRUE;
-
-			strcpy(buffer, format_time_string(time_str));
-			strcpy(buffer, " [");
-			strcat(buffer, client_name);
-
-			char* temeratur = (char*)malloc(sizeof(char) * MAX_NAME_LENGTH);
-			sprintf(temeratur, ":%3d] ", *(int*)sockfd);
-			strcat(buffer, temeratur);	
-			strcat(buffer, " enters the chatroom. \n");		
+			first=1;
+			strcpy(buff, "-------");
+			strcat(buff, name);
+			strcat(buff, " enters the chatroom-------\n");		
 			
 			struct client new_connection = {
-				.cleint_name = client_name,
+				.cleint_name = name,
 				.client_avaliable = TRUE,
-				.client_socket = *(int*)sockfd,
-				.client_group_category = NULL,
-				.zahl_client_group_category = 0
+				.client_socket = *(int*)sockfd
 			};
 			*(connected_clients + zahl_connected_client) = new_connection;
 			zahl_connected_client +=1;
 
-			printf("\x1B[0;31m[%s] A client named [%10s] with ID = %2d is entered in ,now clients : %3d !\n",format_time_string(time_str), client_name, *(int*)sockfd, zahl_connected_client);
+			maximum_socket_ID = *(int*)sockfd;
+			printf("\x1B[0;31m[%s] A client named [%10s] with ID = %2d is entered in ,now clients : %3d !\n",format_time_string(time_str), name, *(int*)sockfd, zahl_connected_client);
 		}
 		else{
 			get_time(time_str);
-			// printf("\n%s----%s",time_str, buffer);
-			payloadHandling(*(int*)sockfd, buffer, time_str);
+			// printf("\n%s----%s",time_str, buff);
+			payloadHandling(*(int*)sockfd, buff, time_str);
 		}
 
 		sem_wait(&mutex); // semaphore wait
 		while(new_message) // wait until all the threads sent the message (new_message=0)
 			;
 		sent_clientfd= *(int*)sockfd; // remember the client that sent the message
-		strcpy(ShareM, buffer); // Put the received message into Share memory
+		strcpy(ShareM, buff); // Put the received message into Share memory
 		new_message=1;  
 		sem_post(&mutex); // semaphore signal
 	}
@@ -355,17 +338,15 @@ int main()
 	int sockfd,  len; 
 	int clientfds[MAX_CLIENTS];
 	struct sockaddr_in servaddr, cliaddr; 
-	char* time_str;
-	time_str=(char*)malloc(50);
-	get_time(time_str);
-
+	
 	// socket create and verification 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); 
 	if (sockfd == -1) { 
-		recordServerInformation("Socket creation failed !\n");
+		printf("-------socket creation failed-------\n"); 
 		exit(0); 
-	} else recordServerInformation("Socket successfully created !\n");
-		
+	} 
+	else
+		printf("-------Socket successfully created-------\n"); 
 	bzero(&servaddr, sizeof(servaddr)); 
 
 	// assign IP, PORT 
@@ -375,15 +356,19 @@ int main()
 
 	// Binding newly created socket to given IP and verification 
 	if ((bind(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr))) != 0) { 
-		recordServerInformation("Socket bind failed !\n");
+		printf("-------Socket bind failed-------\n"); 
 		exit(0); 
-	} else	recordServerInformation("Socket successfully binded !\n");
+	} 
+	else
+		printf("-------Socket successfully binded-------\n"); 
 
 	// Now server is ready to listen and verification 
 	if ((listen(sockfd, MAX_CLIENTS)) != 0) { 
-		recordServerInformation("Listen failed !\n");
+		printf("-------Listen failed-------\n"); 
 		exit(0); 
-	} else	recordServerInformation("Server listening !\n");
+	} 
+	else
+		printf("-------Server listening-------\n"); 
 	len = sizeof(cliaddr); 
 	
 	pthread_t thr_send, thr_recv;
@@ -395,11 +380,14 @@ int main()
 		
 		*clientfd = accept(sockfd, (struct sockaddr*)&cliaddr, &len); 
 		if (*clientfd < 0) { 
-			recordServerInformation("Server acccept failed !\n");
+			printf("-------Server acccept failed-------\n"); 
 			exit(0); 
-		} else{		
-			if(num_client >= MAX_CLIENTS)
-				recordServerInformation("Reach the max number of clients !\n");
+		} 
+		else{
+			
+			if(num_client >= MAX_CLIENTS){
+				printf("-------Reach the max number of clients!-------\n");
+			}
 			else{
 				++num_client;
 				
@@ -499,152 +487,4 @@ int checkIfSocketIDInGroup(int socket_ID, struct group target_group){
 			return index;
 
 	return NOT_FOUND;
-}
-
-char* getGroupNameByMessage(char* message, int end_index){
-	char* group_name = (char*)malloc(sizeof(char)*(end_index+1));
-	memset(group_name, '\0',sizeof(group_name));
-	for(int index=0;index<end_index;index++)
-		*(group_name+index)=*(message+index);
-	return group_name;
-}
-
-int findCahtGroupIndexByName(char* group_name){
-	if(zahl_chat_groups == 0)
-		return NOT_FOUND;
-
-	for(int index=0;index<zahl_chat_groups;index++){
-		struct group temperatur_group = *(chat_groups+index);
-		if(compareStringsIsSame(temperatur_group.group_name,group_name) == TRUE)
-			return index;
-	}
-	return NOT_FOUND;
-}
-
-void payloadHandling(int transmitter,char* payload,char* time_str){
-	printf(WHITE_L"[%15s]Get payload from transmitter : %2d, %s",format_time_string(time_str), transmitter, payload);
-
-	/* Get proccessed data name and message */
-	char* name;
-	char* message;
-	int erst_mode = ALL;
-	
-	int target_index = 0;
-	for(int index=0;index<strlen(payload);index++)
-		if(*(payload+index) == ':'){
-			target_index = index;
-			break;
-		}
-	
-	name = (char*)malloc(sizeof(char)*(target_index+1));
-	memset(name, '\0', sizeof(name));
-	for(int index=0; index < target_index;index ++)
-		*(name+index) = *(payload+index);
-
-	int start = (*(payload+target_index+2) == '@' || *(payload+target_index+2) =='!') ? 1 : 0;
-	message = (char*)malloc(sizeof(char)*(strlen(payload)-target_index-1));
-	memset(message, '\0', sizeof(message));
-	for(int index=target_index+2+start; index < strlen(payload)-1;index ++)
-		*(message+index-(target_index+2+start)) = *(payload+index);
-
-	printf("convert name : %15s, message: %20s, erst_mode = %d \n",name, message, erst_mode);
-
-	if(*(payload+target_index+2) == '@') erst_mode = 1;
-	if(*(payload+target_index+2) == '!') erst_mode = 2;
-
-	if(erst_mode == 0){
-		sending_mode = ALL;
-		return;
-	}
-
-	if(erst_mode == 1){
-		/* Check if @ALL */
-		int if_all = checkIfTagALL(message);
-		if(if_all == TRUE){
-			printf(KGRY"Mode : %d, because %15s @ALL\n", ALL, name);
-			sending_mode = ALL;
-			return;
-		}
-
-		/* Find tagName */
-		int tag_index = -1;
-		for(int index=0;index<strlen(message);index++)
-			if(*(message+index) == ' '){
-				tag_index = index;
-				break;
-			}
-		if(tag_index == -1){
-			sending_mode = ALL;
-			return;
-		}
-
-		char* tag_name = (char*)malloc(sizeof(char)*(tag_index+1));;
-		memset(tag_name, '\0', sizeof(tag_name));
-		for(int index=0;index<tag_index;index++)
-			*(tag_name+index)=*(message+index);
-
-		int tag_client_socket_ID = findTargetClientByName(tag_name);
-		if(tag_client_socket_ID == NOT_FOUND){
-			printf(KGRY"Mode : %d, because %15s @%s : socket_ID NOT_FOUND \n", TAG, name, tag_name);
-			sending_mode = ALL;
-			return;
-		}
-		target_recieved_client = tag_client_socket_ID;
-		printf(KGRY"Mode : %d, because %15s @%s, socket_ID : %d\n", TAG, name, tag_name, target_recieved_client);
-		sending_mode = TAG;
-	}
-
-	if(erst_mode == 2){
-		/* check if send message or join/create*/
-		int if_join_or_create = checkIfJoinCreateGroup(message);
-
-		if(if_join_or_create == NOT_FOUND){
-			/* Find out if it is join or create a group */
-			int join_or_create = distinguishIfJoinCreateGroup(message);
-
-			if(join_or_create == NOT_FOUND){
-				int* mitglied = (int*)malloc(sizeof(int)*MAX_GROUPS_MEMBER);
-				memset(mitglied, -1, sizeof(mitglied));
-				*mitglied = transmitter;
-
-				struct group new_created_group = {
-					.group_name = message,
-					.mitglied_socke_IDs = mitglied,
-					.zahl_mitglied = 1
-				};
-				*(chat_groups+zahl_chat_groups)=new_created_group;
-				zahl_chat_groups = zahl_chat_groups+1;
-
-				printf(KGRN"Mode :%2d client %15s[%2d] wants create a group named %15s, now has %2d groups.\n",CREATE_GROUP, name, transmitter, message, zahl_chat_groups);
-				sending_mode = CREATE_GROUP;
-				return;
-			}
-			
-			struct group joined_group= *(chat_groups+join_or_create);
-			printf(KGRN"client %15s[%2d] joins to the group named %15s in index = %3d \n",name, transmitter, joined_group.group_name, join_or_create);
-			
-			*(joined_group.mitglied_socke_IDs + joined_group.zahl_mitglied) = transmitter;
-			joined_group.zahl_mitglied = joined_group.zahl_mitglied + 1; 
-			
-			*(chat_groups+join_or_create) = joined_group;
-
-			printf("This group has %3d members :",joined_group.zahl_mitglied);
-			for(int index=0;index<joined_group.zahl_mitglied;index++)
-				if(index == joined_group.zahl_mitglied-1)
-					printf(" %s[%3d]\n",findTargetClientBySocketID(*(joined_group.mitglied_socke_IDs+index)),*(joined_group.mitglied_socke_IDs+index));
-				else printf(" %s[%3d],",findTargetClientBySocketID(*(joined_group.mitglied_socke_IDs+index)),*(joined_group.mitglied_socke_IDs+index));
-
-			target_chat_group = join_or_create;
-			sending_mode = JOIN_GROUP;
-			return;
-		}
-
-		/* Send message to the group */
-		char* target_group_name = getGroupNameByMessage(message, if_join_or_create);
-		target_chat_group = findCahtGroupIndexByName(target_group_name);
-		sending_mode = SEND_MESSAGE_GROUP;
-		
-		printf(KYEL"client %15s[%2d] wants send message %s to a group %s,from index %3d\n", name, transmitter, message, target_chat_group);
-		// printf("")
-	}
 }

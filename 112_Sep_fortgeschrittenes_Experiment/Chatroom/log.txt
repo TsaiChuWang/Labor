@@ -1,0 +1,6 @@
+Wed Sep 20 01:20:07 202 [               : -1] - [          oscar:4] |         -------lautrec enters the chatroom-------
+ - 
+Wed Sep 20 01:20:07 202 [               : -1] - [          oscar:4] |         -------lautrec enters the chatroom-------
+ - 
+Wed Sep 20 01:20:10 202 [        lautrec:  5] - [          oscar:4] |                                  lautrec: @ALL hi
+ - 
