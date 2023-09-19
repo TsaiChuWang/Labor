@@ -2,6 +2,8 @@
 #define PORT 1999
 #define MAX_CLIENTS 10
 
+#define MAX_GROUPS 10
+
 sem_t mutex; 
 char ShareM[MAX]; // Share memory
 int num_client=0; // total number of clients
@@ -24,7 +26,16 @@ struct connected_client{
 };
 
 struct connected_client clients[MAX_CLIENTS];
-<<<<<<< HEAD
+
+struct group{
+	char* name;
+
+    int member_Zahl;
+	int* socket_IDs;
+};
+
+struct group groups[MAX_GROUPS];
+
 int prestr(char* a,char* b){
 	printf("A:%d B:%d\n",strlen(a),strlen(b));
 	if(strlen(a)!=strlen(b)){
@@ -39,9 +50,6 @@ int prestr(char* a,char* b){
 	}	
 	return 1;
 }
-=======
-
->>>>>>> c23b14f15a86e3e5831642244e1f66728801972c
 void handle_message(char* buf,int* code){
 	int len=0;
 	for(int i=0;i<strlen(buf);i++){
@@ -71,7 +79,6 @@ void handle_message(char* buf,int* code){
 			
 		if(check == 1)
 			send_mode=0 ; 
-<<<<<<< HEAD
 		else{
 			int lengthname = 0;
 			for(int i=1;i<strlen(message);i++){
@@ -88,7 +95,7 @@ void handle_message(char* buf,int* code){
 			for(int i=0;i<lengthname-1;i++)
 				*(sendname+i)=*(message+i+1);
 			*(sendname+lengthname-1)='\0';
-			printf("Name = %s\n",sendname);
+			// printf("Name = %s\n",sendname);
 
 			send_mode= 1 ;
 
@@ -106,20 +113,19 @@ void handle_message(char* buf,int* code){
 			}
 		}
 			 
-=======
-		else
-			send_mode= 1 ; 
->>>>>>> c23b14f15a86e3e5831642244e1f66728801972c
 			// printf("QQQQQQQQQQQQQQAAAAAAAAAAAAQQQQQQQQQQQQQQ\n");
 	}
 		// printf("QQQQQQQQQQQQQQAAAAAAAAAAAAQQQQQQQQQQQQQQ\n");
+
+    if(*message == '!'){
+        printf("You comment !\n");
+        send_mode = 2;
+
+    }
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> c23b14f15a86e3e5831642244e1f66728801972c
 char* formattime(char* time_str){
 	char* str = (char*)malloc(sizeof(char)*(strlen(time_str)));
 	memset(str,'\0',sizeof(str));
@@ -176,7 +182,19 @@ void* fsend(void* sockfd)
 					num_sent=0;
 					new_message=0;
 				}
-			}
+			}else if(send_mode == 2){
+                send(4, ShareM, sizeof(ShareM), 0); 
+                send(6, ShareM, sizeof(ShareM), 0); 
+				bzero(buff, MAX);
+				num_sent++;
+				sent=1;	
+				if(num_sent == num_client-1){ // last thread that hasn't sent runs
+					bzero(ShareM, MAX); // reset Share memory
+					num_sent=0;
+					new_message=0;
+				}
+                
+            }
 			
 		}
 		else if(sent_clientfd==*(int*)sockfd && num_client==1 && new_message==1){ 
@@ -217,21 +235,14 @@ void* frecv(void* sockfd)
 			*(user_Socket_ID+user_Zahl)=*(int*)sockfd;
 
 			struct connected_client p ={ .name=name,.socket_ID=*(int*)sockfd };
-<<<<<<< HEAD
 			*(clients+user_Zahl) =p;
-=======
->>>>>>> c23b14f15a86e3e5831642244e1f66728801972c
 			// *(clients+user_Zahl) = { .name=name,.socket_ID=*(int*)sockfd};
 
 			user_Zahl ++;
 
 			first=1;
 
-<<<<<<< HEAD
 			// soket_ID_sent = *(int*)sockfd;
-=======
-			soket_ID_sent = *(int*)sockfd;
->>>>>>> c23b14f15a86e3e5831642244e1f66728801972c
 			strcpy(buff, "0");
 			strcat(buff, name);
 			strcat(buff, " enters the chatroom !\n");			
