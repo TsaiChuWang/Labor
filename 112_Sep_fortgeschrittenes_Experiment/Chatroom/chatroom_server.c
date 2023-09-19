@@ -2,8 +2,6 @@
 #define PORT 1999
 #define MAX_CLIENTS 10
 
-#define MAX_GROUPS 10
-
 sem_t mutex; 
 char ShareM[MAX]; // Share memory
 int num_client=0; // total number of clients
@@ -26,18 +24,8 @@ struct connected_client{
 };
 
 struct connected_client clients[MAX_CLIENTS];
-
-struct group{
-	char* name;
-
-    int member_Zahl;
-	int* socket_IDs;
-};
-
-struct group groups[MAX_GROUPS];
-
 int prestr(char* a,char* b){
-	printf("A:%d B:%d\n",strlen(a),strlen(b));
+	// printf("A:%d B:%d\n",strlen(a),strlen(b));
 	if(strlen(a)!=strlen(b)){
 		// printf("no ame long\n");
 		return 0;
@@ -50,6 +38,7 @@ int prestr(char* a,char* b){
 	}	
 	return 1;
 }
+
 void handle_message(char* buf,int* code){
 	int len=0;
 	for(int i=0;i<strlen(buf);i++){
@@ -95,7 +84,7 @@ void handle_message(char* buf,int* code){
 			for(int i=0;i<lengthname-1;i++)
 				*(sendname+i)=*(message+i+1);
 			*(sendname+lengthname-1)='\0';
-			// printf("Name = %s\n",sendname);
+			printf("Name = %s\n",sendname);
 
 			send_mode= 1 ;
 
@@ -116,12 +105,6 @@ void handle_message(char* buf,int* code){
 			// printf("QQQQQQQQQQQQQQAAAAAAAAAAAAQQQQQQQQQQQQQQ\n");
 	}
 		// printf("QQQQQQQQQQQQQQAAAAAAAAAAAAQQQQQQQQQQQQQQ\n");
-
-    if(*message == '!'){
-        printf("You comment !\n");
-        send_mode = 2;
-
-    }
 }
 
 
@@ -173,6 +156,7 @@ void* fsend(void* sockfd)
 					new_message=0;
 				}
 			}else if(send_mode == 1){
+				printf("ID : %d\n",soket_ID_sent);
 				send(soket_ID_sent, ShareM, sizeof(ShareM), 0); 
 				bzero(buff, MAX);
 				num_sent++;
@@ -182,19 +166,7 @@ void* fsend(void* sockfd)
 					num_sent=0;
 					new_message=0;
 				}
-			}else if(send_mode == 2){
-                send(4, ShareM, sizeof(ShareM), 0); 
-                send(6, ShareM, sizeof(ShareM), 0); 
-				bzero(buff, MAX);
-				num_sent++;
-				sent=1;	
-				if(num_sent == num_client-1){ // last thread that hasn't sent runs
-					bzero(ShareM, MAX); // reset Share memory
-					num_sent=0;
-					new_message=0;
-				}
-                
-            }
+			}
 			
 		}
 		else if(sent_clientfd==*(int*)sockfd && num_client==1 && new_message==1){ 
