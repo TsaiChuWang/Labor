@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
 	// assign IP, PORT 
 	clientaddr.sin_family = AF_INET; 
-	clientaddr.sin_port = htons((uint16_t)1999); 
+	clientaddr.sin_port = htons((uint16_t)PORT); 
 	inet_pton(AF_INET, argv[1], &clientaddr.sin_addr);
 
 	// connect the client socket to server socket 
@@ -123,3 +123,13 @@ int main(int argc, char *argv[])
 	// close the socket 
 	close(clientfd); 
 } 
+
+// /* Structure of client */
+// struct client
+// {
+// 	char* cleint_name;
+// 	int client_socket;
+// 	int client_avaliable;
+// };
+// struct client connected_clients[MAX_CLIENTS];
+// int zahl_connected_client =0;
