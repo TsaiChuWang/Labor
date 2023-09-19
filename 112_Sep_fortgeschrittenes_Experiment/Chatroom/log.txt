@@ -1,0 +1,7 @@
+Wed Sep 20 02:45:18 202 Socket successfully created !
+Wed Sep 20 02:45:18 202 Socket successfully binded !
+Wed Sep 20 02:45:18 202 Server listening !
+Wed Sep 20 02:45:30 202 [          oscar:  4] A client named [     oscar] with ID =  4 is entered in chatroom, now clients :   1 !
+Wed Sep 20 02:45:33 202 [        lautrec:  5] A client named [   lautrec] with ID =  5 is entered in chatroom, now clients :   2 !
+Wed Sep 20 02:45:35 202 [        solarie:  6] A client named [   solarie] with ID =  6 is entered in chatroom, now clients :   3 !
+Wed Sep 20 02:45:37 202 [      siegmeyer:  7] A client named [ siegmeyer] with ID =  7 is entered in chatroom, now clients :   4 !

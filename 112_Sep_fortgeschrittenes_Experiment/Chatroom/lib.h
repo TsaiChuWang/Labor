@@ -21,6 +21,7 @@
 #define NOT_FOUND -1
 #define NAME_NOT_FOUND ""
 
+#define SERVER -1
 #define ALL 0
 #define TAG 1
 #define CREATE_GROUP 2

@@ -230,9 +230,24 @@ void recordServerInfomation(char* message){
     fclose(file);
 }
 
+/* Reocord client connections */
+void recordClientConnectionsInfomation(char* client_name, int client_socket_ID){
+	char* time_str = (char*)malloc(sizeof(char)*TIME_LENGTH);
+	get_time(time_str);
+
+	FILE* file = fopen(FILENAME, "a");
+
+    if (file == NULL) 
+        perror("Error opening the file");
+    fprintf(file, "%s [%15s:%3d] A client named [%10s] with ID = %2d is entered in chatroom, now clients : %3d !\n", format_time_string(time_str), client_name, client_socket_ID, client_name, client_socket_ID, zahl_connected_client);
+	printf(KBLU_L"%s [%15s:%3d] A client named [%10s] with ID = %2d is entered in chatroom, now clients : %3d !\n", format_time_string(time_str), client_name, client_socket_ID, client_name, client_socket_ID, zahl_connected_client);
+
+    fclose(file);
+}
+
 void* fsend(void* sockfd) 
 {
-	char buff[MAX]; 
+	char buffer[MAX]; 
 	int sent=0; // set to one when this thread has already sent the new message
 	for (;;) { 
 		if(exit_clientfd == *(int*)sockfd){
@@ -248,7 +263,7 @@ void* fsend(void* sockfd)
 			{
 			case ALL:
 				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buff, MAX);
+				bzero(buffer, MAX);
 				num_sent++;
 				sent=1;	
 				if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -261,7 +276,7 @@ void* fsend(void* sockfd)
 				if(*(int*)sockfd == target_recieved_client){
 					printf(KRED_L"Mode :%2d, send to client : %2d :%s\n",TAG, target_recieved_client, ShareM);
 					send(target_recieved_client , ShareM, sizeof(ShareM), 0); 
-					bzero(buff, MAX);
+					bzero(buffer, MAX);
 					num_sent++;
 					sent=1;	
 					if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -273,7 +288,7 @@ void* fsend(void* sockfd)
 				break;
 			case CREATE_GROUP:
 				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buff, MAX);
+				bzero(buffer, MAX);
 				num_sent++;
 				sent=1;	
 				if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -296,7 +311,7 @@ void* fsend(void* sockfd)
 				is_in_group = checkIfSocketIDInGroup(*(int*)sockfd, target_group);
 				if(is_in_group != NOT_FOUND){
 					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-					bzero(buff, MAX);
+					bzero(buffer, MAX);
 					num_sent++;
 					sent=1;	
 					if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -321,7 +336,7 @@ void* fsend(void* sockfd)
 				printf(KYEL"Mode :%2d, now broadcast to group %3d named %s\n", sending_mode, target_chat_group, target_group.group_name);
 
 				// send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				// bzero(buff, MAX);
+				// bzero(buffer, MAX);
 				// num_sent++;
 				// sent=1;	
 				// if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -340,7 +355,7 @@ void* fsend(void* sockfd)
 				is_in_group = checkIfSocketIDInGroup(*(int*)sockfd, target_group);
 				if(is_in_group != NOT_FOUND){
 					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-					bzero(buff, MAX);
+					bzero(buffer, MAX);
 					num_sent++;
 					sent=1;	
 					if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -362,7 +377,7 @@ void* fsend(void* sockfd)
 				break;
 			default:
 				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buff, MAX);
+				bzero(buffer, MAX);
 				num_sent++;
 				sent=1;	
 				if(num_sent == num_client-1){ // last thread that hasn't sent runs
@@ -385,52 +400,54 @@ void* fsend(void* sockfd)
 
 void* frecv(void* sockfd) 
 {
-	char buff[MAX];
+	char buffer[MAX];
 	char name[MAX];
 	char* time_str;
 	time_str=(char*)malloc(50);
 	bzero(name,MAX);
-    int first=0;
+    int erst_komm=0;
 
-	for(;;){		
-		bzero(buff, MAX);
-		recv(*(int*)sockfd, buff, sizeof(buff), 0); 
-		if(buff[0]=='\0'){
+	while(TRUE){		
+		bzero(buffer, MAX);
+		recv(*(int*)sockfd, buffer, sizeof(buffer), 0); 
+		if(buffer[0]=='\0'){
 			exit_clientfd= *(int*)sockfd; // record exited clientfd
 			get_time(time_str);
 			printf("\n%s-------%s exit-------\n",time_str,name);			
 			break;
 		}
-		if(!first){//fisrt message is the name of client
-			strcpy(name,buff);	
+		if(!erst_komm){//fisrt message is the name of client
+			strcpy(name,buffer);	
 			get_time(time_str);
-			first=1;
-			strcpy(buff, "-------");
-			strcat(buff, name);
-			strcat(buff, " enters the chatroom-------\n");		
+			erst_komm = TRUE;
+			strcat(buffer, name);
+			strcat(buffer, " enters the chatroom !\n");		
 			
 			struct client new_connection = {
 				.cleint_name = name,
 				.client_avaliable = TRUE,
-				.client_socket = *(int*)sockfd
+				.client_socket = *(int*)sockfd,
+				.client_group_category = NULL,
+				.zahl_client_group_category = 0
 			};
 			*(connected_clients + zahl_connected_client) = new_connection;
 			zahl_connected_client +=1;
 
-			maximum_socket_ID = *(int*)sockfd;
-			printf("\x1B[0;31m[%s] A client named [%10s] with ID = %2d is entered in ,now clients : %3d !\n",format_time_string(time_str), name, *(int*)sockfd, zahl_connected_client);
+			recordClientConnectionsInfomation(name, *(int*)sockfd);
+			// printf("\x1B[0;31m[%s] A client named [%10s] with ID = %2d is entered in ,now clients : %3d !\n",format_time_string(time_str), name, *(int*)sockfd, zahl_connected_client);
+			sending_mode = SERVER;
 		}
 		else{
 			get_time(time_str);
-			// printf("\n%s----%s",time_str, buff);
-			payloadHandling(*(int*)sockfd, buff, time_str);
+			// printf("\n%s----%s",time_str, buffer);
+			payloadHandling(*(int*)sockfd, buffer, time_str);
 		}
 
 		sem_wait(&mutex); // semaphore wait
 		while(new_message) // wait until all the threads sent the message (new_message=0)
 			;
 		sent_clientfd= *(int*)sockfd; // remember the client that sent the message
-		strcpy(ShareM, buff); // Put the received message into Share memory
+		strcpy(ShareM, buffer); // Put the received message into Share memory
 		new_message=1;  
 		sem_post(&mutex); // semaphore signal
 	}
