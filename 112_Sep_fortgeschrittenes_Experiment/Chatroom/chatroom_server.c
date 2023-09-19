@@ -89,6 +89,32 @@ int findCahtGroupIndexByName(char* group_name){
 	return NOT_FOUND;
 }
 
+/* Find the client structure */
+int findTargetClientSturctureByID(int socket_ID){
+	for(int index=0;index<zahl_connected_client;index++){
+		struct client temperatur_client = *(connected_clients+index);
+		if(temperatur_client.client_socket == socket_ID)
+			return index;
+	}
+	return NOT_FOUND;
+}
+
+/* Reocord Create a group */
+void recordCreateGroupInfomation(int transmitter,char* group_name){
+	char* time_str = (char*)malloc(sizeof(char)*TIME_LENGTH);
+	get_time(time_str);
+
+	FILE* file = fopen(FILENAME, "a");
+
+    if (file == NULL) 
+        perror("Error opening the file");
+	
+    fprintf(file, "%s [%15s:%3d] Mode :%2d client %15s[%2d] wants create a group named %15s, now has %2d groups.\n", format_time_string(time_str), findTargetClientBySocketID(transmitter), transmitter, sending_mode, findTargetClientBySocketID(transmitter), transmitter, group_name, zahl_chat_groups);
+	printf(KMAG"%s [%15s:%3d] Mode :%2d client %15s[%2d] wants create a group named %15s, now has %2d groups.\n", format_time_string(time_str), findTargetClientBySocketID(transmitter), transmitter, sending_mode, findTargetClientBySocketID(transmitter), transmitter, group_name, zahl_chat_groups);
+
+    fclose(file);
+}
+
 /* Handle the payload */
 void payloadHandling(int transmitter,char* payload,char* time_str){
 	// printf(WHITE_L"[%15s]Get payload from transmitter : %2d, %s",format_time_string(time_str), transmitter, payload);
@@ -130,7 +156,7 @@ void payloadHandling(int transmitter,char* payload,char* time_str){
 		/* Check if @ALL */
 		int if_all = checkIfTagALL(message);
 		if(if_all == TRUE){
-			printf(KGRY"Mode : %d, because %15s @ALL\n", ALL, name);
+			// printf(KGRY"Mode : %d, because %15s @ALL\n", ALL, name);
 			sending_mode = ALL;
 			return;
 		}
@@ -159,7 +185,7 @@ void payloadHandling(int transmitter,char* payload,char* time_str){
 			return;
 		}
 		target_recieved_client = tag_client_socket_ID;
-		printf(KGRY"Mode : %d, because %15s @%s, socket_ID : %d\n", TAG, name, tag_name, target_recieved_client);
+		// printf(KGRY"Mode : %d, because %15s @%s, socket_ID : %d\n", TAG, name, tag_name, target_recieved_client);
 		sending_mode = TAG;
 	}
 
@@ -184,7 +210,19 @@ void payloadHandling(int transmitter,char* payload,char* time_str){
 				*(chat_groups+zahl_chat_groups)=new_created_group;
 				zahl_chat_groups = zahl_chat_groups+1;
 
-				printf(KGRN"Mode :%2d client %15s[%2d] wants create a group named %15s, now has %2d groups.\n",CREATE_GROUP, name, transmitter, message, zahl_chat_groups);
+				int client_index = findTargetClientSturctureByID(transmitter);
+				struct client target_client = *(connected_clients+client_index);
+
+				int* client_group_category = target_client.client_group_category;
+				int category_index = target_client.zahl_client_group_category;
+				*(client_group_category + category_index) = zahl_chat_groups - 1;
+				category_index = category_index + 1;
+				target_client.client_group_category = client_group_category;
+				target_client.zahl_client_group_category = category_index;
+				*(connected_clients+client_index) = target_client;
+
+				recordCreateGroupInfomation(transmitter, message);
+				// printf(KGRN"Mode :%2d client %15s[%2d] wants create a group named %15s, now has %2d groups.\n",CREATE_GROUP, name, transmitter, message, zahl_chat_groups);
 				sending_mode = CREATE_GROUP;
 				return;
 			}
@@ -268,11 +306,42 @@ void recordTagALLInfomation(char* message, int reciever){
 	for(int index=0; index < target_index;index ++)
 		*(name+index) = *(message+index);
 	
-    fprintf(file, "%s [%15s:%3d] - [%15s:%3d] %50s ", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
-	printf(KGRN"%s [%15s:%3d] - [%15s:%3d] %50s ", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
+    fprintf(file, "%s [%15s:%3d] - [%15s:%3d] %50s", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
+	printf(KGRN"%s [%15s:%3d] - [%15s:%3d] %50s", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
 
     fclose(file);
 }
+
+/* Reocord tag someone connections */
+void recordTagSomeoneInfomation(char* message, int reciever){
+	char* time_str = (char*)malloc(sizeof(char)*TIME_LENGTH);
+	get_time(time_str);
+
+	FILE* file = fopen(FILENAME, "a");
+
+    if (file == NULL) 
+        perror("Error opening the file");
+
+	char* name;
+	int target_index = 0;
+	for(int index=0;index<strlen(message);index++)
+		if(*(message+index) == ':'){
+			target_index = index;
+			break;
+		}
+	
+	name = (char*)malloc(sizeof(char)*(target_index+1));
+	memset(name, '\0', sizeof(name));
+	for(int index=0; index < target_index;index ++)
+		*(name+index) = *(message+index);
+	
+    fprintf(file, "%s [%15s:%3d] - [%15s:%3d] %50s", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
+	printf(KYEL"%s [%15s:%3d] - [%15s:%3d] %50s", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
+
+    fclose(file);
+}
+
+
 
 void* fsend(void* sockfd) 
 {
@@ -302,10 +371,23 @@ void* fsend(void* sockfd)
 						new_message=0;
 					}
 					break;
-			case TAG:
-				if(*(int*)sockfd == target_recieved_client){
-					printf(KRED_L"Mode :%2d, send to client : %2d :%s\n",TAG, target_recieved_client, ShareM);
-					send(target_recieved_client , ShareM, sizeof(ShareM), 0); 
+				case TAG:
+					if(*(int*)sockfd == target_recieved_client){
+						recordTagSomeoneInfomation(ShareM, *(int*)sockfd);
+						printf(KRED_L"Mode :%2d, send to client : %2d :%s\n",TAG, target_recieved_client, ShareM);
+						send(target_recieved_client , ShareM, sizeof(ShareM), 0); 
+						bzero(buffer, MAX);
+						num_sent++;
+						sent=1;	
+						if(num_sent == num_client-1){ // last thread that hasn't sent runs
+							bzero(ShareM, MAX); // reset Share memory
+							num_sent=0;
+							new_message=0;
+						}
+					}
+					break;
+				case CREATE_GROUP:
+					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
 					bzero(buffer, MAX);
 					num_sent++;
 					sent=1;	
@@ -314,19 +396,7 @@ void* fsend(void* sockfd)
 						num_sent=0;
 						new_message=0;
 					}
-				}
-				break;
-			case CREATE_GROUP:
-				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buffer, MAX);
-				num_sent++;
-				sent=1;	
-				if(num_sent == num_client-1){ // last thread that hasn't sent runs
-					bzero(ShareM, MAX); // reset Share memory
-					num_sent=0;
-					new_message=0;
-				}
-				break;
+					break;
 			case JOIN_GROUP:
 				target_group = *(chat_groups + target_chat_group);
 				printf(KGRN"Mode :%2d, now broadcast to group %3d named %s\n", sending_mode, target_chat_group, target_group.group_name);
@@ -450,21 +520,22 @@ void* frecv(void* sockfd)
 			strcpy(name,buffer);	
 			get_time(time_str);
 			erst_komm = TRUE;
-			strcat(buffer, name);
 			strcat(buffer, " enters the chatroom !\n");		
 			
+			int* category = (int*)malloc(sizeof(int)*MAX_GROUPS);
+			memset(category, -1, sizeof(category));
 			struct client new_connection = {
 				.cleint_name = name,
 				.client_avaliable = TRUE,
 				.client_socket = *(int*)sockfd,
-				.client_group_category = NULL,
+				.client_group_category = category,
 				.zahl_client_group_category = 0
 			};
 			*(connected_clients + zahl_connected_client) = new_connection;
 			zahl_connected_client +=1;
 
 			recordClientConnectionsInfomation(name, *(int*)sockfd);
-			sending_mode = SERVER;
+			// sending_mode = SERVER;
 		}
 		else{
 			get_time(time_str);
