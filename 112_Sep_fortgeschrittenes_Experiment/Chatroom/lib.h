@@ -14,10 +14,7 @@
 #define MAX 80
 
 #define TIME_LENGTH 50
-<<<<<<< HEAD
 #define MAX_NAME_LENGTH 15
-=======
->>>>>>> 291608681bed19c9c7e9084de668f2cdc0b97731
 
 #define TRUE 1
 #define FALSE 0
