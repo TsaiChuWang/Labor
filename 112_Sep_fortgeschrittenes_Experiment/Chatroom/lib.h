@@ -28,7 +28,7 @@
 #define JOIN_GROUP 3
 #define SEND_MESSAGE_GROUP 4
 
-#define PORT 2012
+#define PORT 2013
 
 #define ALLWORD "ALL"
 #define ALLWORD_LENGTH 3

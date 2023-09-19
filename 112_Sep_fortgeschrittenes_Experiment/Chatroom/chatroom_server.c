@@ -91,7 +91,7 @@ int findCahtGroupIndexByName(char* group_name){
 
 /* Handle the payload */
 void payloadHandling(int transmitter,char* payload,char* time_str){
-	printf(WHITE_L"[%15s]Get payload from transmitter : %2d, %s",format_time_string(time_str), transmitter, payload);
+	// printf(WHITE_L"[%15s]Get payload from transmitter : %2d, %s",format_time_string(time_str), transmitter, payload);
 
 	/* Get proccessed data name and message */
 	char* name;
@@ -116,7 +116,7 @@ void payloadHandling(int transmitter,char* payload,char* time_str){
 	for(int index=target_index+2+start; index < strlen(payload)-1;index ++)
 		*(message+index-(target_index+2+start)) = *(payload+index);
 
-	printf("convert name : %15s, message: %20s, erst_mode = %d \n",name, message, erst_mode);
+	// printf("convert name : %15s, message: %20s, erst_mode = %d \n",name, message, erst_mode);
 
 	if(*(payload+target_index+2) == '@') erst_mode = 1;
 	if(*(payload+target_index+2) == '!') erst_mode = 2;
@@ -245,11 +245,40 @@ void recordClientConnectionsInfomation(char* client_name, int client_socket_ID){
     fclose(file);
 }
 
+/* Reocord tag ALL connections */
+void recordTagALLInfomation(char* message, int reciever){
+	char* time_str = (char*)malloc(sizeof(char)*TIME_LENGTH);
+	get_time(time_str);
+
+	FILE* file = fopen(FILENAME, "a");
+
+    if (file == NULL) 
+        perror("Error opening the file");
+
+	char* name;
+	int target_index = 0;
+	for(int index=0;index<strlen(message);index++)
+		if(*(message+index) == ':'){
+			target_index = index;
+			break;
+		}
+	
+	name = (char*)malloc(sizeof(char)*(target_index+1));
+	memset(name, '\0', sizeof(name));
+	for(int index=0; index < target_index;index ++)
+		*(name+index) = *(message+index);
+	
+    fprintf(file, "%s [%15s:%3d] - [%15s:%3d] %50s ", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
+	printf(KGRN"%s [%15s:%3d] - [%15s:%3d] %50s ", format_time_string(time_str), name, findTargetClientByName(name), findTargetClientBySocketID(reciever), reciever, message);
+
+    fclose(file);
+}
+
 void* fsend(void* sockfd) 
 {
 	char buffer[MAX]; 
 	int sent=0; // set to one when this thread has already sent the new message
-	for (;;) { 
+	while(TRUE) { 
 		if(exit_clientfd == *(int*)sockfd){
 			exit_clientfd=-1;
 			break;
@@ -261,17 +290,18 @@ void* fsend(void* sockfd)
 
 			switch (sending_mode)
 			{
-			case ALL:
-				send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
-				bzero(buffer, MAX);
-				num_sent++;
-				sent=1;	
-				if(num_sent == num_client-1){ // last thread that hasn't sent runs
-					bzero(ShareM, MAX); // reset Share memory
-					num_sent=0;
-					new_message=0;
-				}
-				break;
+				case ALL:
+					recordTagALLInfomation(ShareM, *(int*)sockfd);
+					send(*(int*)sockfd, ShareM, sizeof(ShareM), 0); 
+					bzero(buffer, MAX);
+					num_sent++;
+					sent=1;	
+					if(num_sent == num_client-1){ // last thread that hasn't sent runs
+						bzero(ShareM, MAX); // reset Share memory
+						num_sent=0;
+						new_message=0;
+					}
+					break;
 			case TAG:
 				if(*(int*)sockfd == target_recieved_client){
 					printf(KRED_L"Mode :%2d, send to client : %2d :%s\n",TAG, target_recieved_client, ShareM);
@@ -434,7 +464,6 @@ void* frecv(void* sockfd)
 			zahl_connected_client +=1;
 
 			recordClientConnectionsInfomation(name, *(int*)sockfd);
-			// printf("\x1B[0;31m[%s] A client named [%10s] with ID = %2d is entered in ,now clients : %3d !\n",format_time_string(time_str), name, *(int*)sockfd, zahl_connected_client);
 			sending_mode = SERVER;
 		}
 		else{
