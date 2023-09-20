@@ -1,18 +1,21 @@
-Wed Sep 20 07:38:52 202 Socket successfully created !
-Wed Sep 20 07:38:52 202 Socket successfully binded !
-Wed Sep 20 07:38:52 202 Server listening !
-Wed Sep 20 07:38:54 202 [        solarie:  4] A client named [   solarie] with ID =  4 is entered in chatroom, now clients :   1 !
-Wed Sep 20 07:38:55 202 [          oscar:  5] A client named [     oscar] with ID =  5 is entered in chatroom, now clients :   2 !
-Wed Sep 20 07:38:55 202 [               : -1] - [        solarie:  4]                       oscar enters the chatroom !
-Wed Sep 20 07:38:55 202 [      siegmeyer:  6] A client named [ siegmeyer] with ID =  6 is entered in chatroom, now clients :   3 !
-Wed Sep 20 07:38:55 202 [               : -1] - [        solarie:  4]                   siegmeyer enters the chatroom !
-Wed Sep 20 07:38:55 202 [               : -1] - [          oscar:  5]                   siegmeyer enters the chatroom !
-Wed Sep 20 07:38:56 202 [        lautrec:  7] A client named [   lautrec] with ID =  7 is entered in chatroom, now clients :   4 !
-Wed Sep 20 07:38:56 202 [               : -1] - [          oscar:  5]                     lautrec enters the chatroom !
-Wed Sep 20 07:38:56 202 [               : -1] - [        solarie:  4]                     lautrec enters the chatroom !
-Wed Sep 20 07:38:56 202 [               : -1] - [      siegmeyer:  6]                     lautrec enters the chatroom !
-Wed Sep 20 07:39:00 202 [        lautrec:  7] Mode : 0 client         lautrec[ 7] wants create a group named          undead, now has  1 groups.
-Wed Sep 20 07:39:06 202 [      siegmeyer:  6] Mode : 2 client       siegmeyer[ 6] wants to join a group named          undead, now has  1 groups.
-This group has   2 members :lautrec siegmeyer[  6]
-Wed Sep 20 07:39:24 202 [        solarie:  4] Mode : 3 client         solarie[ 4] wants to join a group named          undead, now has  1 groups.
-This group has   3 members :lautrecsiegmeyer solarie[  4]
+Wed Sep 20 07:58:41 202 Socket successfully created !
+Wed Sep 20 07:58:41 202 Socket successfully binded !
+Wed Sep 20 07:58:41 202 Server listening !
+Wed Sep 20 07:58:53 202 [          oscar:  4] A client named [     oscar] with ID =  4 is entered in chatroom, now clients :   1 !
+Wed Sep 20 07:58:58 202 [      siegmeyer:  5] A client named [ siegmeyer] with ID =  5 is entered in chatroom, now clients :   2 !
+Wed Sep 20 07:58:58 202 [               : -1] - [          oscar:  4]                   siegmeyer enters the chatroom !
+Wed Sep 20 07:59:02 202 [        lautrec:  6] A client named [   lautrec] with ID =  6 is entered in chatroom, now clients :   3 !
+Wed Sep 20 07:59:02 202 [               : -1] - [          oscar:  4]                     lautrec enters the chatroom !
+Wed Sep 20 07:59:02 202 [               : -1] - [      siegmeyer:  5]                     lautrec enters the chatroom !
+Wed Sep 20 07:59:07 202 [        solarie:  7] A client named [   solarie] with ID =  7 is entered in chatroom, now clients :   4 !
+Wed Sep 20 07:59:07 202 [               : -1] - [          oscar:  4]                     solarie enters the chatroom !
+Wed Sep 20 07:59:07 202 [               : -1] - [      siegmeyer:  5]                     solarie enters the chatroom !
+Wed Sep 20 07:59:07 202 [               : -1] - [        lautrec:  6]                     solarie enters the chatroom !
+Wed Sep 20 07:59:20 202 [          oscar:  4] Mode : 0 client           oscar[ 4] wants create a group named          undead, now has  1 groups.
+Wed Sep 20 08:01:22 202 [      siegmeyer:  5] Mode : 2 client       siegmeyer[ 5] wants to join a group named          undead, now has  1 groups.
+This group has   2 members : oscar[  4], siegmeyer[  5]
+Wed Sep 20 08:01:37 202 [        lautrec:  6] Mode : 3 client         lautrec[ 6] wants to join a group named          undead, now has  1 groups.
+This group has   3 members : oscar[  4], siegmeyer[  5], lautrec[  6]
+Wed Sep 20 08:03:51 202 [      siegmeyer:  5] - [      siegmeyer:  5]                 siegmeyer: !undead hello undeads!
+Wed Sep 20 08:03:51 202 [      siegmeyer:  5] - [          oscar:  4]                 siegmeyer: !undead hello undeads!
+Wed Sep 20 08:03:51 202 [      siegmeyer:  5] - [        lautrec:  6]                 siegmeyer: !undead hello undeads!
