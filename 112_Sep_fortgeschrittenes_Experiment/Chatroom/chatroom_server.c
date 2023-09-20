@@ -446,7 +446,7 @@ void* fsend(void* sockfd)
 				case TAG:
 					if(*(int*)sockfd == target_recieved_client){
 						recordTagSomeoneInfomation(ShareM, *(int*)sockfd);
-						printf(KRED_L"Mode :%2d, send to client : %2d :%s\n",TAG, target_recieved_client, ShareM);
+						// printf(KRED_L"Mode :%2d, send to client : %2d :%s\n",TAG, target_recieved_client, ShareM);
 						send(target_recieved_client , ShareM, sizeof(ShareM), 0); 
 						bzero(buffer, MAX);
 						num_sent++;
@@ -598,7 +598,6 @@ void* frecv(void* sockfd)
 			zahl_connected_client +=1;
 
 			recordClientConnectionsInfomation(name, *(int*)sockfd);
-			// sending_mode = SERVER;
 		}
 		else{
 			get_time(time_str);
