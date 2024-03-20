@@ -21,7 +21,7 @@ int main()
 	int x,y,i,j,k,h,link,node,c;
 	int con=0;
 	FILE *f1;
-	f1=fopen("C:/1515.lp","w+");
+	f1=fopen("./1515.lp","w+");
 	fprintf(f1,"min r\n");
 	fprintf(f1,"Subject to \n");
 	c=77;
