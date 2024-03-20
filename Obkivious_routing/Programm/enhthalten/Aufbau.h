@@ -1,0 +1,1 @@
+#define ERFOLG 0
