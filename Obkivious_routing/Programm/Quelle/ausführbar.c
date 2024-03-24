@@ -144,43 +144,24 @@ int main()
     }
     fprintf(dateizeiger, "\n\n");
 	
+    // Decision constraints (Entscheidungsbeschränkungen)
 	fprintf(dateizeiger,"Bounds\n");
-	for(kant = 1;kant<= ANZAHL_KANTEN;kant++){
-		for(kant_andere = 1;kant_andere<= ANZAHL_KANTEN;kant_andere++){
+
+    // pi_e(h)
+	for(int kant = 1;kant<=ANZAHL_KANTEN;kant++)
+		for(int kant_andere = 1;kant_andere<=ANZAHL_KANTEN;kant_andere++)
 			fprintf(dateizeiger,"pi_e%02d(h%02d) >=  0\n", kant, kant_andere);
-		}
-	}
-	for(k = 1;k<= ANZAHL_KANTEN;k++){
-		for(kant = 1;kant<= ANZAHL_KNOTEN;kant++){
-			for(kant_andere = 1;kant_andere<= ANZAHL_KNOTEN;kant_andere++){
-				if(kant!= kant_andere){
-					fprintf(dateizeiger,"s(%02d_%02d)_e%02d_plus > 0\n", kant, kant_andere,k);
-				}
-			}
-		}
-	}
+		
+	// /forall kant\in E, knote_i knote_j \in N, i\neq j
+    for(int kant = 1;kant<=ANZAHL_KANTEN;kant++)
+        for(int knote_i=1;knote_i<=ANZAHL_KNOTEN;knote_i++)
+			for(int knote_j=1;knote_j<=ANZAHL_KNOTEN;knote_j++)
+                if(knote_i!=knote_j){
+                    fprintf(dateizeiger,"s(%02d_%02d)_e%02d_plus  >= 0\n", knote_i, knote_j, kant); // s_e^+(i,j)
+                    fprintf(dateizeiger,"s(%02d_%02d)_e%02d_minus >= 0\n", knote_i, knote_j, kant); // s_e^-(i,j)
+                    fprintf(dateizeiger," f_%02d_%02d(e%02d) >=  0\n", knote_i, knote_j, kant); // f_{st}(e)>=0
+				    fprintf(dateizeiger," f_%02d_%02d(e%02d) <=  1\n", knote_i, knote_j, kant); // f_{st}(e)<=1
+                }
 
-	for(k = 1;k<= ANZAHL_KANTEN;k++){
-		for(kant = 1;kant<= ANZAHL_KNOTEN;kant++){
-			for(kant_andere = 1;kant_andere<= ANZAHL_KNOTEN;kant_andere++){
-				if(kant!= kant_andere){
-					fprintf(dateizeiger,"s(%02d_%02d)_e%02d_minus >=  0\n", kant, kant_andere,k);
-				}
-			}
-		}
-	}
-
-	for(kant = 1;kant<= ANZAHL_KANTEN;kant++){
-		for(i = 1;i<= ANZAHL_KNOTEN;i++){
-			for(j = 1;j<= ANZAHL_KNOTEN;j++){
-				if(i!= j){
-				fprintf(dateizeiger," f_%02d_%02d(e%02d) >=  0\n",i,j, kant);
-				fprintf(dateizeiger," f_%02d_%02d(e%02d) <=  1\n",i,j, kant);
-				}
-			}
-		}
-	}
-
-	fprintf(dateizeiger,"End\n");
-	printf("end\n");
+	fprintf(dateizeiger,"\nEnd\n");
 }
