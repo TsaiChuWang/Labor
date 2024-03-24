@@ -1,4 +1,9 @@
-#  include <stdio.h>
+#define ALLE_GLEICHE_KAPAZITÄT
+
+#include "../Enthalten/Aufbau.h"
+#include "../Enthalten/Prüfung.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int adj[6][6]={{0,1,1,0,0,0},
 					 {1,0,0,1,0,0},
@@ -36,6 +41,8 @@ int main()
 		}
 		}
 		
+// line
+
 		for(i=1;i<=6;i++){
 			h=1;
 			for(j=1;j<=6;j++){
