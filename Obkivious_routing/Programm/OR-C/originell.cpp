@@ -94,7 +94,7 @@ int main()
 				
 			}
 		}
-		// line
+		
 	}
 	
 	link=1;
@@ -150,6 +150,7 @@ int main()
 						h=0;
 			}
 		}
+		// line
 		//mid
 		h=0;
 				for(k=1;k<=6;k++){			
