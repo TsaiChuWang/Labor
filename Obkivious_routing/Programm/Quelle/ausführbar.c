@@ -39,7 +39,7 @@ int main(void){
         for(int knote_i = 1; knote_i<=ANZAHL_KNOTEN; knote_i++) //knote_i = i
             for(int knote_j = 1; knote_j<=ANZAHL_KNOTEN; knote_j++)  // knote_j = j
                 if(knote_i != knote_j)
-                    fprintf(dateizeiger, "%d p_e%02d(%02d_%02d) + %d s_e%02d_plus(%02d_%02d) - %d s_e%02d_minus(%02d_%02d) -f_%02d_%02d(e%02d) >= 0\n", KAPAZITÄT, kant, knote_i, knote_j, KAPAZITÄT, kant, knote_i, knote_j, KAPAZITÄT, kant, knote_i, knote_j, knote_i, knote_j, kant);
+                    fprintf(dateizeiger, "%d p_e%02d(%02d_%02d) + %d s_e%02d_plus(%02d_%02d) - %d s_e%02d_minus(%02d_%02d) - f_%02d_%02d(e%02d) >= 0\n", KAPAZITÄT, kant, knote_i, knote_j, KAPAZITÄT, kant, knote_i, knote_j, KAPAZITÄT, kant, knote_i, knote_j, knote_i, knote_j, kant);
         fprintf(dateizeiger, "\n");
     }
 
@@ -70,7 +70,7 @@ int main(void){
     fprintf(dateizeiger, "\n\n");
     
     // Constraint 3 : \sum_{ij}(s_e^-(i,j)a_{ij}-s_e^+(i,j)b_{ij})\geq0
-    for(int kant=1; kant<=ANZAHL_KANTEN; kant++){
+    for(int kant=1; kant<=ANZAHL_KANTEN; kant++)
         for(int knote_i = 1; knote_i<=ANZAHL_KNOTEN; knote_i++)  { //knote_i = i
             for(int knote_j = 1; knote_j<=ANZAHL_KNOTEN; knote_j++){
                 if(knote_i < knote_j)
@@ -83,11 +83,77 @@ int main(void){
                     fprintf(dateizeiger, " >= 0\n");
             }
         }
+    
+
+    fprintf(dateizeiger, "\n");
+
+    // Flow conservation  : Zuberbeitung
+    int verknupfüng = 1;
+	for(int knote_i = 0; knote_i<ANZAHL_KNOTEN; knote_i++) 
+		for(int knote_j = 0; knote_j<ANZAHL_KNOTEN; knote_j++)
+			if(LISTE[knote_i][knote_j] == RICHTIG) {
+				LISTE[knote_i][knote_j] = verknupfüng;
+				verknupfüng ++;
+			}
+
+    // Flow conservation : constraints
+    int schalter = 0;
+    for(int knote = 1; knote<=ANZAHL_KNOTEN; knote++){
+        // Quelle
+        schalter = 0;
+        for(int knote_i = 1; knote_i<=ANZAHL_KNOTEN; knote_i++)
+            if(knote != knote_i){
+                for(int knote_j = 1; knote_j<=ANZAHL_KNOTEN; knote_j++)
+                    if (LISTE[knote - 1][knote_j - 1] != 0){
+                        if(schalter == 0)
+                            schalter = 1;
+                        else if(schalter == 1)
+                            fprintf(dateizeiger, " + ");
+
+                        fprintf(dateizeiger, "f_%02d_%02d(e%02d) - f_%02d_%02d(e%02d)", knote, knote_i, LISTE[knote - 1][knote_j - 1], knote, knote_i, LISTE[knote_j - 1][knote -1]);
+                    }
+                fprintf(dateizeiger, " =  1 \n");
+                schalter =0;
+            }
+        
+        // Ziel
+        schalter = 0;
+        for(int knote_i = 1; knote_i<=ANZAHL_KNOTEN; knote_i++)
+            if(knote != knote_i){
+                for(int knote_j = 1; knote_j<=ANZAHL_KNOTEN; knote_j++)
+                    if(LISTE[knote - 1][knote_j - 1] != 0){
+                        if(schalter == 0)
+                            schalter = 1;
+                        else if(schalter == 1)
+                            fprintf(dateizeiger, " + ");
+
+                        fprintf(dateizeiger, "f_%02d_%02d(e%02d) - f_%02d_%02d(e%02d)", knote_i, knote, LISTE[knote - 1][knote_j - 1], knote_i, knote, LISTE[knote_j - 1][knote -1]);
+                    }
+                fprintf(dateizeiger, " = -1 \n");
+                schalter = 0;
+            }
+
+        // Mitte
+        schalter = 0;
+        for(int knote_k = 1; knote_k<=ANZAHL_KNOTEN; knote_k++)
+            for(int knote_i = 1; knote_i<=ANZAHL_KNOTEN; knote_i++)
+                if((knote != knote_i) && (knote != knote_k) && (knote_i != knote_k)){
+                    for(int knote_j = 1; knote_j<=ANZAHL_KNOTEN; knote_j++)
+                        if(LISTE[knote - 1][knote_j - 1] != 0){
+                            if(schalter == 0)
+                                schalter = 1;
+                            else if(schalter == 1)
+                                fprintf(dateizeiger, " + ");
+
+                            fprintf(dateizeiger, "f_%02d_%02d(e%02d) - f_%02d_%02d(e%02d)", knote_k, knote_i, LISTE[knote - 1][knote_j - 1], knote_k, knote_i, LISTE[knote_j - 1][knote -1]);
+                        }
+                    fprintf(dateizeiger, " =  0 \n");
+                    schalter = 0;
+                }
+                
         fprintf(dateizeiger, "\n");
     }
-
-    fprintf(dateizeiger, "\n\n");
-
+	
     // Speichern Sie die Textdatei
     fprintf(dateizeiger,"End\n");
     fclose(dateizeiger);
