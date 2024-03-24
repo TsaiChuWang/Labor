@@ -91,12 +91,12 @@ int main()
 		schalter = 0;
 		for(int knote_i=1;knote_i<=ANZAHL_KNOTEN;knote_i++)
 			if(knote!=knote_i){
-				for(int knote_j=1;knote_j<= ANZAHL_KNOTEN;knote_j++)
+				for(int knote_j=1;knote_j<=ANZAHL_KNOTEN;knote_j++)
 					if(LISTE[knote-1][knote_j-1]!=0){
 						if(schalter == 0)
 							schalter = 1;
 						else if(schalter == 1)
-							fprintf(dateizeiger," +");
+							fprintf(dateizeiger," + ");
 						
 						fprintf(dateizeiger," f_%02d_%02d(e%02d) - f_%02d_%02d(e%02d)", knote, knote_i,LISTE[knote-1][knote_j-1], knote, knote_i,LISTE[knote_j-1][knote-1]);
 					}
@@ -104,7 +104,6 @@ int main()
 				fprintf(dateizeiger,"  =  1\n");
 				schalter = 0;
 			}
-			
 		 // Ziel
 		schalter = 0;
 		for(int knote_i=1;knote_i<=ANZAHL_KNOTEN;knote_i++)
@@ -127,13 +126,13 @@ int main()
 		schalter = 0;
 		for(int knote_k=1;knote_k<=ANZAHL_KNOTEN;knote_k++)		
 			for(int knote_i=1;knote_i<=ANZAHL_KNOTEN;knote_i++)
-				if(knote!= i&&knote!= k&&i!= k){
+				if(knote!= knote_i && knote!=knote_k && knote_i!=knote_k){
 					for(int knote_j=1;knote_j<=ANZAHL_KNOTEN;knote_j++){
 						if(LISTE[knote-1][knote_j-1]!= 0){
 							if(schalter == 0)
 								schalter = 1;
 							else if(schalter == 1)
-								fprintf(dateizeiger," +");
+								fprintf(dateizeiger," + ");
 							
 							fprintf(dateizeiger," f_%02d_%02d(e%02d) - f_%02d_%02d(e%02d)", knote_k, knote_i, LISTE[knote-1][knote_j-1], knote_k, knote_i,LISTE[knote_j-1][knote-1]);
 						}
