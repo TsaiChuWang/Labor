@@ -1,7 +1,16 @@
 #define ALLE_GLEICHE_KAPAZITÄT
 
+#define NSFNET
+
+#ifdef EINS
+	#include "../Enthalten/Erstes_Modul.h"   // MATERIAL
+#endif
+#ifdef NSFNET
+	#include "../Enthalten/NSFNET.h"   // NSFNET
+#endif
+
 #include "../Enthalten/Aufbau.h"
-#include "../Enthalten/Erstes_Modul.h"   // MATERIAL AUF PRÜFUNG
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -166,5 +175,5 @@ int main()
                 }
 
 	fprintf(dateizeiger,"\nEnd\n");
-	
+	// druckinformationstopologie();
 }
