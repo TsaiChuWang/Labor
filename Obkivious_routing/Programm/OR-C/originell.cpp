@@ -41,7 +41,7 @@ int main()
 		}
 		}
 		
-// line
+
 
 		for(i=1;i<=6;i++){
 			h=1;
@@ -94,7 +94,7 @@ int main()
 				
 			}
 		}
-		
+		// line
 	}
 	
 	link=1;

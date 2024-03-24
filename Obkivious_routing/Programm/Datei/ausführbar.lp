@@ -1,6 +1,7 @@
 min r
 Subject to 
  77pi_e01(h01) +  77pi_e01(h02) +  77pi_e01(h03) +  77pi_e01(h04) +  77pi_e01(h05) +  77pi_e01(h06) +  77pi_e01(h07) +  77pi_e01(h08) +  77pi_e01(h09) +  77pi_e01(h10) +  77pi_e01(h11) +  77pi_e01(h12) - r <=  0
+
  pi_e01(h01) - p(01_02)_e01 >=  0
  pi_e01(h02) - p(01_03)_e01 >=  0
  pi_e01(h03) + p(01_02)_e01 >=  0
@@ -73,6 +74,7 @@ Subject to
  pi_e01(h10) + p(06_05)_e01 >=  0
  pi_e01(h11) - p(06_04)_e01 >=  0
  pi_e01(h12) - p(06_05)_e01 >=  0
+
  77 p(01_02)_e01 + 77 s(01_02)_e01_plus - 77s(01_02)_e01_minus -f_01_02(e01) >=  0
  77 p(01_03)_e01 + 77 s(01_03)_e01_plus - 77s(01_03)_e01_minus -f_01_03(e01) >=  0
  77 p(01_04)_e01 + 77 s(01_04)_e01_plus - 77s(01_04)_e01_minus -f_01_04(e01) >=  0
@@ -103,8 +105,11 @@ Subject to
  77 p(06_03)_e01 + 77 s(06_03)_e01_plus - 77s(06_03)_e01_minus -f_06_03(e01) >=  0
  77 p(06_04)_e01 + 77 s(06_04)_e01_plus - 77s(06_04)_e01_minus -f_06_04(e01) >=  0
  77 p(06_05)_e01 + 77 s(06_05)_e01_plus - 77s(06_05)_e01_minus -f_06_05(e01) >=  0
- 1s(01_02)_e01_minus - 2s(01_02)_e01_plus + 1s(01_03)_e01_minus - 3s(01_03)_e01_plus + 1s(01_04)_e01_minus - 4s(01_04)_e01_plus + 1s(01_05)_e01_minus - 5s(01_05)_e01_plus + 1s(01_06)_e01_minus - 6s(01_06)_e01_plus + 1s(02_01)_e01_minus - 2s(02_01)_e01_plus + 2s(02_03)_e01_minus - 3s(02_03)_e01_plus + 2s(02_04)_e01_minus - 4s(02_04)_e01_plus + 2s(02_05)_e01_minus - 5s(02_05)_e01_plus + 2s(02_06)_e01_minus - 6s(02_06)_e01_plus + 1s(03_01)_e01_minus - 3s(03_01)_e01_plus + 2s(03_02)_e01_minus - 3s(03_02)_e01_plus + 3s(03_04)_e01_minus - 4s(03_04)_e01_plus + 3s(03_05)_e01_minus - 5s(03_05)_e01_plus + 3s(03_06)_e01_minus - 6s(03_06)_e01_plus + 1s(04_01)_e01_minus - 4s(04_01)_e01_plus + 2s(04_02)_e01_minus - 4s(04_02)_e01_plus + 3s(04_03)_e01_minus - 4s(04_03)_e01_plus + 4s(04_05)_e01_minus - 5s(04_05)_e01_plus + 4s(04_06)_e01_minus - 6s(04_06)_e01_plus + 1s(05_01)_e01_minus - 5s(05_01)_e01_plus + 2s(05_02)_e01_minus - 5s(05_02)_e01_plus + 3s(05_03)_e01_minus - 5s(05_03)_e01_plus + 4s(05_04)_e01_minus - 5s(05_04)_e01_plus + 5s(05_06)_e01_minus - 6s(05_06)_e01_plus + 1s(06_01)_e01_minus - 6s(06_01)_e01_plus + 2s(06_02)_e01_minus - 6s(06_02)_e01_plus + 3s(06_03)_e01_minus - 6s(06_03)_e01_plus + 4s(06_04)_e01_minus - 6s(06_04)_e01_plus + 5s(06_05)_e01_minus - 6s(06_05)_e01_plus >= 0
+
+ 1s(01_02)_e01_minus - 2s(01_02)_e01_plus + 1s(01_03)_e01_minus - 3s(01_03)_e01_plus + 1s(01_04)_e01_minus - 4s(01_04)_e01_plus + 1s(01_05)_e01_minus - 5s(01_05)_e01_plus + 1s(01_06)_e01_minus - 6s(01_06)_e01_plus + 1s(02_01)_e01_minus - 2s(02_01)_e01_plus + 2s(02_03)_e01_minus - 3s(02_03)_e01_plus + 2s(02_04)_e01_minus - 4s(02_04)_e01_plus + 2s(02_05)_e01_minus - 5s(02_05)_e01_plus + 2s(02_06)_e01_minus - 6s(02_06)_e01_plus + 1s(03_01)_e01_minus - 3s(03_01)_e01_plus + 2s(03_02)_e01_minus - 3s(03_02)_e01_plus + 3s(03_04)_e01_minus - 4s(03_04)_e01_plus + 3s(03_05)_e01_minus - 5s(03_05)_e01_plus + 3s(03_06)_e01_minus - 6s(03_06)_e01_plus + 1s(04_01)_e01_minus - 4s(04_01)_e01_plus + 2s(04_02)_e01_minus - 4s(04_02)_e01_plus + 3s(04_03)_e01_minus - 4s(04_03)_e01_plus + 4s(04_05)_e01_minus - 5s(04_05)_e01_plus + 4s(04_06)_e01_minus - 6s(04_06)_e01_plus + 1s(05_01)_e01_minus - 5s(05_01)_e01_plus + 2s(05_02)_e01_minus - 5s(05_02)_e01_plus + 3s(05_03)_e01_minus - 5s(05_03)_e01_plus + 4s(05_04)_e01_minus - 5s(05_04)_e01_plus + 5s(05_06)_e01_minus - 6s(05_06)_e01_plus + 1s(06_01)_e01_minus - 6s(06_01)_e01_plus + 2s(06_02)_e01_minus - 6s(06_02)_e01_plus + 3s(06_03)_e01_minus - 6s(06_03)_e01_plus + 4s(06_04)_e01_minus - 6s(06_04)_e01_plus + 5s(06_05)_e01_minus - 6s(06_05)_e01_plus
+
  77pi_e02(h01) +  77pi_e02(h02) +  77pi_e02(h03) +  77pi_e02(h04) +  77pi_e02(h05) +  77pi_e02(h06) +  77pi_e02(h07) +  77pi_e02(h08) +  77pi_e02(h09) +  77pi_e02(h10) +  77pi_e02(h11) +  77pi_e02(h12) - r <=  0
+
  pi_e02(h01) - p(01_02)_e02 >=  0
  pi_e02(h02) - p(01_03)_e02 >=  0
  pi_e02(h03) + p(01_02)_e02 >=  0
@@ -177,6 +182,7 @@ Subject to
  pi_e02(h10) + p(06_05)_e02 >=  0
  pi_e02(h11) - p(06_04)_e02 >=  0
  pi_e02(h12) - p(06_05)_e02 >=  0
+
  77 p(01_02)_e02 + 77 s(01_02)_e02_plus - 77s(01_02)_e02_minus -f_01_02(e02) >=  0
  77 p(01_03)_e02 + 77 s(01_03)_e02_plus - 77s(01_03)_e02_minus -f_01_03(e02) >=  0
  77 p(01_04)_e02 + 77 s(01_04)_e02_plus - 77s(01_04)_e02_minus -f_01_04(e02) >=  0
@@ -207,8 +213,11 @@ Subject to
  77 p(06_03)_e02 + 77 s(06_03)_e02_plus - 77s(06_03)_e02_minus -f_06_03(e02) >=  0
  77 p(06_04)_e02 + 77 s(06_04)_e02_plus - 77s(06_04)_e02_minus -f_06_04(e02) >=  0
  77 p(06_05)_e02 + 77 s(06_05)_e02_plus - 77s(06_05)_e02_minus -f_06_05(e02) >=  0
- 1s(01_02)_e02_minus - 2s(01_02)_e02_plus + 1s(01_03)_e02_minus - 3s(01_03)_e02_plus + 1s(01_04)_e02_minus - 4s(01_04)_e02_plus + 1s(01_05)_e02_minus - 5s(01_05)_e02_plus + 1s(01_06)_e02_minus - 6s(01_06)_e02_plus + 1s(02_01)_e02_minus - 2s(02_01)_e02_plus + 2s(02_03)_e02_minus - 3s(02_03)_e02_plus + 2s(02_04)_e02_minus - 4s(02_04)_e02_plus + 2s(02_05)_e02_minus - 5s(02_05)_e02_plus + 2s(02_06)_e02_minus - 6s(02_06)_e02_plus + 1s(03_01)_e02_minus - 3s(03_01)_e02_plus + 2s(03_02)_e02_minus - 3s(03_02)_e02_plus + 3s(03_04)_e02_minus - 4s(03_04)_e02_plus + 3s(03_05)_e02_minus - 5s(03_05)_e02_plus + 3s(03_06)_e02_minus - 6s(03_06)_e02_plus + 1s(04_01)_e02_minus - 4s(04_01)_e02_plus + 2s(04_02)_e02_minus - 4s(04_02)_e02_plus + 3s(04_03)_e02_minus - 4s(04_03)_e02_plus + 4s(04_05)_e02_minus - 5s(04_05)_e02_plus + 4s(04_06)_e02_minus - 6s(04_06)_e02_plus + 1s(05_01)_e02_minus - 5s(05_01)_e02_plus + 2s(05_02)_e02_minus - 5s(05_02)_e02_plus + 3s(05_03)_e02_minus - 5s(05_03)_e02_plus + 4s(05_04)_e02_minus - 5s(05_04)_e02_plus + 5s(05_06)_e02_minus - 6s(05_06)_e02_plus + 1s(06_01)_e02_minus - 6s(06_01)_e02_plus + 2s(06_02)_e02_minus - 6s(06_02)_e02_plus + 3s(06_03)_e02_minus - 6s(06_03)_e02_plus + 4s(06_04)_e02_minus - 6s(06_04)_e02_plus + 5s(06_05)_e02_minus - 6s(06_05)_e02_plus >= 0
+
+ 1s(01_02)_e02_minus - 2s(01_02)_e02_plus + 1s(01_03)_e02_minus - 3s(01_03)_e02_plus + 1s(01_04)_e02_minus - 4s(01_04)_e02_plus + 1s(01_05)_e02_minus - 5s(01_05)_e02_plus + 1s(01_06)_e02_minus - 6s(01_06)_e02_plus + 1s(02_01)_e02_minus - 2s(02_01)_e02_plus + 2s(02_03)_e02_minus - 3s(02_03)_e02_plus + 2s(02_04)_e02_minus - 4s(02_04)_e02_plus + 2s(02_05)_e02_minus - 5s(02_05)_e02_plus + 2s(02_06)_e02_minus - 6s(02_06)_e02_plus + 1s(03_01)_e02_minus - 3s(03_01)_e02_plus + 2s(03_02)_e02_minus - 3s(03_02)_e02_plus + 3s(03_04)_e02_minus - 4s(03_04)_e02_plus + 3s(03_05)_e02_minus - 5s(03_05)_e02_plus + 3s(03_06)_e02_minus - 6s(03_06)_e02_plus + 1s(04_01)_e02_minus - 4s(04_01)_e02_plus + 2s(04_02)_e02_minus - 4s(04_02)_e02_plus + 3s(04_03)_e02_minus - 4s(04_03)_e02_plus + 4s(04_05)_e02_minus - 5s(04_05)_e02_plus + 4s(04_06)_e02_minus - 6s(04_06)_e02_plus + 1s(05_01)_e02_minus - 5s(05_01)_e02_plus + 2s(05_02)_e02_minus - 5s(05_02)_e02_plus + 3s(05_03)_e02_minus - 5s(05_03)_e02_plus + 4s(05_04)_e02_minus - 5s(05_04)_e02_plus + 5s(05_06)_e02_minus - 6s(05_06)_e02_plus + 1s(06_01)_e02_minus - 6s(06_01)_e02_plus + 2s(06_02)_e02_minus - 6s(06_02)_e02_plus + 3s(06_03)_e02_minus - 6s(06_03)_e02_plus + 4s(06_04)_e02_minus - 6s(06_04)_e02_plus + 5s(06_05)_e02_minus - 6s(06_05)_e02_plus
+
  77pi_e03(h01) +  77pi_e03(h02) +  77pi_e03(h03) +  77pi_e03(h04) +  77pi_e03(h05) +  77pi_e03(h06) +  77pi_e03(h07) +  77pi_e03(h08) +  77pi_e03(h09) +  77pi_e03(h10) +  77pi_e03(h11) +  77pi_e03(h12) - r <=  0
+
  pi_e03(h01) - p(01_02)_e03 >=  0
  pi_e03(h02) - p(01_03)_e03 >=  0
  pi_e03(h03) + p(01_02)_e03 >=  0
@@ -281,6 +290,7 @@ Subject to
  pi_e03(h10) + p(06_05)_e03 >=  0
  pi_e03(h11) - p(06_04)_e03 >=  0
  pi_e03(h12) - p(06_05)_e03 >=  0
+
  77 p(01_02)_e03 + 77 s(01_02)_e03_plus - 77s(01_02)_e03_minus -f_01_02(e03) >=  0
  77 p(01_03)_e03 + 77 s(01_03)_e03_plus - 77s(01_03)_e03_minus -f_01_03(e03) >=  0
  77 p(01_04)_e03 + 77 s(01_04)_e03_plus - 77s(01_04)_e03_minus -f_01_04(e03) >=  0
@@ -311,8 +321,11 @@ Subject to
  77 p(06_03)_e03 + 77 s(06_03)_e03_plus - 77s(06_03)_e03_minus -f_06_03(e03) >=  0
  77 p(06_04)_e03 + 77 s(06_04)_e03_plus - 77s(06_04)_e03_minus -f_06_04(e03) >=  0
  77 p(06_05)_e03 + 77 s(06_05)_e03_plus - 77s(06_05)_e03_minus -f_06_05(e03) >=  0
- 1s(01_02)_e03_minus - 2s(01_02)_e03_plus + 1s(01_03)_e03_minus - 3s(01_03)_e03_plus + 1s(01_04)_e03_minus - 4s(01_04)_e03_plus + 1s(01_05)_e03_minus - 5s(01_05)_e03_plus + 1s(01_06)_e03_minus - 6s(01_06)_e03_plus + 1s(02_01)_e03_minus - 2s(02_01)_e03_plus + 2s(02_03)_e03_minus - 3s(02_03)_e03_plus + 2s(02_04)_e03_minus - 4s(02_04)_e03_plus + 2s(02_05)_e03_minus - 5s(02_05)_e03_plus + 2s(02_06)_e03_minus - 6s(02_06)_e03_plus + 1s(03_01)_e03_minus - 3s(03_01)_e03_plus + 2s(03_02)_e03_minus - 3s(03_02)_e03_plus + 3s(03_04)_e03_minus - 4s(03_04)_e03_plus + 3s(03_05)_e03_minus - 5s(03_05)_e03_plus + 3s(03_06)_e03_minus - 6s(03_06)_e03_plus + 1s(04_01)_e03_minus - 4s(04_01)_e03_plus + 2s(04_02)_e03_minus - 4s(04_02)_e03_plus + 3s(04_03)_e03_minus - 4s(04_03)_e03_plus + 4s(04_05)_e03_minus - 5s(04_05)_e03_plus + 4s(04_06)_e03_minus - 6s(04_06)_e03_plus + 1s(05_01)_e03_minus - 5s(05_01)_e03_plus + 2s(05_02)_e03_minus - 5s(05_02)_e03_plus + 3s(05_03)_e03_minus - 5s(05_03)_e03_plus + 4s(05_04)_e03_minus - 5s(05_04)_e03_plus + 5s(05_06)_e03_minus - 6s(05_06)_e03_plus + 1s(06_01)_e03_minus - 6s(06_01)_e03_plus + 2s(06_02)_e03_minus - 6s(06_02)_e03_plus + 3s(06_03)_e03_minus - 6s(06_03)_e03_plus + 4s(06_04)_e03_minus - 6s(06_04)_e03_plus + 5s(06_05)_e03_minus - 6s(06_05)_e03_plus >= 0
+
+ 1s(01_02)_e03_minus - 2s(01_02)_e03_plus + 1s(01_03)_e03_minus - 3s(01_03)_e03_plus + 1s(01_04)_e03_minus - 4s(01_04)_e03_plus + 1s(01_05)_e03_minus - 5s(01_05)_e03_plus + 1s(01_06)_e03_minus - 6s(01_06)_e03_plus + 1s(02_01)_e03_minus - 2s(02_01)_e03_plus + 2s(02_03)_e03_minus - 3s(02_03)_e03_plus + 2s(02_04)_e03_minus - 4s(02_04)_e03_plus + 2s(02_05)_e03_minus - 5s(02_05)_e03_plus + 2s(02_06)_e03_minus - 6s(02_06)_e03_plus + 1s(03_01)_e03_minus - 3s(03_01)_e03_plus + 2s(03_02)_e03_minus - 3s(03_02)_e03_plus + 3s(03_04)_e03_minus - 4s(03_04)_e03_plus + 3s(03_05)_e03_minus - 5s(03_05)_e03_plus + 3s(03_06)_e03_minus - 6s(03_06)_e03_plus + 1s(04_01)_e03_minus - 4s(04_01)_e03_plus + 2s(04_02)_e03_minus - 4s(04_02)_e03_plus + 3s(04_03)_e03_minus - 4s(04_03)_e03_plus + 4s(04_05)_e03_minus - 5s(04_05)_e03_plus + 4s(04_06)_e03_minus - 6s(04_06)_e03_plus + 1s(05_01)_e03_minus - 5s(05_01)_e03_plus + 2s(05_02)_e03_minus - 5s(05_02)_e03_plus + 3s(05_03)_e03_minus - 5s(05_03)_e03_plus + 4s(05_04)_e03_minus - 5s(05_04)_e03_plus + 5s(05_06)_e03_minus - 6s(05_06)_e03_plus + 1s(06_01)_e03_minus - 6s(06_01)_e03_plus + 2s(06_02)_e03_minus - 6s(06_02)_e03_plus + 3s(06_03)_e03_minus - 6s(06_03)_e03_plus + 4s(06_04)_e03_minus - 6s(06_04)_e03_plus + 5s(06_05)_e03_minus - 6s(06_05)_e03_plus
+
  77pi_e04(h01) +  77pi_e04(h02) +  77pi_e04(h03) +  77pi_e04(h04) +  77pi_e04(h05) +  77pi_e04(h06) +  77pi_e04(h07) +  77pi_e04(h08) +  77pi_e04(h09) +  77pi_e04(h10) +  77pi_e04(h11) +  77pi_e04(h12) - r <=  0
+
  pi_e04(h01) - p(01_02)_e04 >=  0
  pi_e04(h02) - p(01_03)_e04 >=  0
  pi_e04(h03) + p(01_02)_e04 >=  0
@@ -385,6 +398,7 @@ Subject to
  pi_e04(h10) + p(06_05)_e04 >=  0
  pi_e04(h11) - p(06_04)_e04 >=  0
  pi_e04(h12) - p(06_05)_e04 >=  0
+
  77 p(01_02)_e04 + 77 s(01_02)_e04_plus - 77s(01_02)_e04_minus -f_01_02(e04) >=  0
  77 p(01_03)_e04 + 77 s(01_03)_e04_plus - 77s(01_03)_e04_minus -f_01_03(e04) >=  0
  77 p(01_04)_e04 + 77 s(01_04)_e04_plus - 77s(01_04)_e04_minus -f_01_04(e04) >=  0
@@ -415,8 +429,11 @@ Subject to
  77 p(06_03)_e04 + 77 s(06_03)_e04_plus - 77s(06_03)_e04_minus -f_06_03(e04) >=  0
  77 p(06_04)_e04 + 77 s(06_04)_e04_plus - 77s(06_04)_e04_minus -f_06_04(e04) >=  0
  77 p(06_05)_e04 + 77 s(06_05)_e04_plus - 77s(06_05)_e04_minus -f_06_05(e04) >=  0
- 1s(01_02)_e04_minus - 2s(01_02)_e04_plus + 1s(01_03)_e04_minus - 3s(01_03)_e04_plus + 1s(01_04)_e04_minus - 4s(01_04)_e04_plus + 1s(01_05)_e04_minus - 5s(01_05)_e04_plus + 1s(01_06)_e04_minus - 6s(01_06)_e04_plus + 1s(02_01)_e04_minus - 2s(02_01)_e04_plus + 2s(02_03)_e04_minus - 3s(02_03)_e04_plus + 2s(02_04)_e04_minus - 4s(02_04)_e04_plus + 2s(02_05)_e04_minus - 5s(02_05)_e04_plus + 2s(02_06)_e04_minus - 6s(02_06)_e04_plus + 1s(03_01)_e04_minus - 3s(03_01)_e04_plus + 2s(03_02)_e04_minus - 3s(03_02)_e04_plus + 3s(03_04)_e04_minus - 4s(03_04)_e04_plus + 3s(03_05)_e04_minus - 5s(03_05)_e04_plus + 3s(03_06)_e04_minus - 6s(03_06)_e04_plus + 1s(04_01)_e04_minus - 4s(04_01)_e04_plus + 2s(04_02)_e04_minus - 4s(04_02)_e04_plus + 3s(04_03)_e04_minus - 4s(04_03)_e04_plus + 4s(04_05)_e04_minus - 5s(04_05)_e04_plus + 4s(04_06)_e04_minus - 6s(04_06)_e04_plus + 1s(05_01)_e04_minus - 5s(05_01)_e04_plus + 2s(05_02)_e04_minus - 5s(05_02)_e04_plus + 3s(05_03)_e04_minus - 5s(05_03)_e04_plus + 4s(05_04)_e04_minus - 5s(05_04)_e04_plus + 5s(05_06)_e04_minus - 6s(05_06)_e04_plus + 1s(06_01)_e04_minus - 6s(06_01)_e04_plus + 2s(06_02)_e04_minus - 6s(06_02)_e04_plus + 3s(06_03)_e04_minus - 6s(06_03)_e04_plus + 4s(06_04)_e04_minus - 6s(06_04)_e04_plus + 5s(06_05)_e04_minus - 6s(06_05)_e04_plus >= 0
+
+ 1s(01_02)_e04_minus - 2s(01_02)_e04_plus + 1s(01_03)_e04_minus - 3s(01_03)_e04_plus + 1s(01_04)_e04_minus - 4s(01_04)_e04_plus + 1s(01_05)_e04_minus - 5s(01_05)_e04_plus + 1s(01_06)_e04_minus - 6s(01_06)_e04_plus + 1s(02_01)_e04_minus - 2s(02_01)_e04_plus + 2s(02_03)_e04_minus - 3s(02_03)_e04_plus + 2s(02_04)_e04_minus - 4s(02_04)_e04_plus + 2s(02_05)_e04_minus - 5s(02_05)_e04_plus + 2s(02_06)_e04_minus - 6s(02_06)_e04_plus + 1s(03_01)_e04_minus - 3s(03_01)_e04_plus + 2s(03_02)_e04_minus - 3s(03_02)_e04_plus + 3s(03_04)_e04_minus - 4s(03_04)_e04_plus + 3s(03_05)_e04_minus - 5s(03_05)_e04_plus + 3s(03_06)_e04_minus - 6s(03_06)_e04_plus + 1s(04_01)_e04_minus - 4s(04_01)_e04_plus + 2s(04_02)_e04_minus - 4s(04_02)_e04_plus + 3s(04_03)_e04_minus - 4s(04_03)_e04_plus + 4s(04_05)_e04_minus - 5s(04_05)_e04_plus + 4s(04_06)_e04_minus - 6s(04_06)_e04_plus + 1s(05_01)_e04_minus - 5s(05_01)_e04_plus + 2s(05_02)_e04_minus - 5s(05_02)_e04_plus + 3s(05_03)_e04_minus - 5s(05_03)_e04_plus + 4s(05_04)_e04_minus - 5s(05_04)_e04_plus + 5s(05_06)_e04_minus - 6s(05_06)_e04_plus + 1s(06_01)_e04_minus - 6s(06_01)_e04_plus + 2s(06_02)_e04_minus - 6s(06_02)_e04_plus + 3s(06_03)_e04_minus - 6s(06_03)_e04_plus + 4s(06_04)_e04_minus - 6s(06_04)_e04_plus + 5s(06_05)_e04_minus - 6s(06_05)_e04_plus
+
  77pi_e05(h01) +  77pi_e05(h02) +  77pi_e05(h03) +  77pi_e05(h04) +  77pi_e05(h05) +  77pi_e05(h06) +  77pi_e05(h07) +  77pi_e05(h08) +  77pi_e05(h09) +  77pi_e05(h10) +  77pi_e05(h11) +  77pi_e05(h12) - r <=  0
+
  pi_e05(h01) - p(01_02)_e05 >=  0
  pi_e05(h02) - p(01_03)_e05 >=  0
  pi_e05(h03) + p(01_02)_e05 >=  0
@@ -489,6 +506,7 @@ Subject to
  pi_e05(h10) + p(06_05)_e05 >=  0
  pi_e05(h11) - p(06_04)_e05 >=  0
  pi_e05(h12) - p(06_05)_e05 >=  0
+
  77 p(01_02)_e05 + 77 s(01_02)_e05_plus - 77s(01_02)_e05_minus -f_01_02(e05) >=  0
  77 p(01_03)_e05 + 77 s(01_03)_e05_plus - 77s(01_03)_e05_minus -f_01_03(e05) >=  0
  77 p(01_04)_e05 + 77 s(01_04)_e05_plus - 77s(01_04)_e05_minus -f_01_04(e05) >=  0
@@ -519,8 +537,11 @@ Subject to
  77 p(06_03)_e05 + 77 s(06_03)_e05_plus - 77s(06_03)_e05_minus -f_06_03(e05) >=  0
  77 p(06_04)_e05 + 77 s(06_04)_e05_plus - 77s(06_04)_e05_minus -f_06_04(e05) >=  0
  77 p(06_05)_e05 + 77 s(06_05)_e05_plus - 77s(06_05)_e05_minus -f_06_05(e05) >=  0
- 1s(01_02)_e05_minus - 2s(01_02)_e05_plus + 1s(01_03)_e05_minus - 3s(01_03)_e05_plus + 1s(01_04)_e05_minus - 4s(01_04)_e05_plus + 1s(01_05)_e05_minus - 5s(01_05)_e05_plus + 1s(01_06)_e05_minus - 6s(01_06)_e05_plus + 1s(02_01)_e05_minus - 2s(02_01)_e05_plus + 2s(02_03)_e05_minus - 3s(02_03)_e05_plus + 2s(02_04)_e05_minus - 4s(02_04)_e05_plus + 2s(02_05)_e05_minus - 5s(02_05)_e05_plus + 2s(02_06)_e05_minus - 6s(02_06)_e05_plus + 1s(03_01)_e05_minus - 3s(03_01)_e05_plus + 2s(03_02)_e05_minus - 3s(03_02)_e05_plus + 3s(03_04)_e05_minus - 4s(03_04)_e05_plus + 3s(03_05)_e05_minus - 5s(03_05)_e05_plus + 3s(03_06)_e05_minus - 6s(03_06)_e05_plus + 1s(04_01)_e05_minus - 4s(04_01)_e05_plus + 2s(04_02)_e05_minus - 4s(04_02)_e05_plus + 3s(04_03)_e05_minus - 4s(04_03)_e05_plus + 4s(04_05)_e05_minus - 5s(04_05)_e05_plus + 4s(04_06)_e05_minus - 6s(04_06)_e05_plus + 1s(05_01)_e05_minus - 5s(05_01)_e05_plus + 2s(05_02)_e05_minus - 5s(05_02)_e05_plus + 3s(05_03)_e05_minus - 5s(05_03)_e05_plus + 4s(05_04)_e05_minus - 5s(05_04)_e05_plus + 5s(05_06)_e05_minus - 6s(05_06)_e05_plus + 1s(06_01)_e05_minus - 6s(06_01)_e05_plus + 2s(06_02)_e05_minus - 6s(06_02)_e05_plus + 3s(06_03)_e05_minus - 6s(06_03)_e05_plus + 4s(06_04)_e05_minus - 6s(06_04)_e05_plus + 5s(06_05)_e05_minus - 6s(06_05)_e05_plus >= 0
+
+ 1s(01_02)_e05_minus - 2s(01_02)_e05_plus + 1s(01_03)_e05_minus - 3s(01_03)_e05_plus + 1s(01_04)_e05_minus - 4s(01_04)_e05_plus + 1s(01_05)_e05_minus - 5s(01_05)_e05_plus + 1s(01_06)_e05_minus - 6s(01_06)_e05_plus + 1s(02_01)_e05_minus - 2s(02_01)_e05_plus + 2s(02_03)_e05_minus - 3s(02_03)_e05_plus + 2s(02_04)_e05_minus - 4s(02_04)_e05_plus + 2s(02_05)_e05_minus - 5s(02_05)_e05_plus + 2s(02_06)_e05_minus - 6s(02_06)_e05_plus + 1s(03_01)_e05_minus - 3s(03_01)_e05_plus + 2s(03_02)_e05_minus - 3s(03_02)_e05_plus + 3s(03_04)_e05_minus - 4s(03_04)_e05_plus + 3s(03_05)_e05_minus - 5s(03_05)_e05_plus + 3s(03_06)_e05_minus - 6s(03_06)_e05_plus + 1s(04_01)_e05_minus - 4s(04_01)_e05_plus + 2s(04_02)_e05_minus - 4s(04_02)_e05_plus + 3s(04_03)_e05_minus - 4s(04_03)_e05_plus + 4s(04_05)_e05_minus - 5s(04_05)_e05_plus + 4s(04_06)_e05_minus - 6s(04_06)_e05_plus + 1s(05_01)_e05_minus - 5s(05_01)_e05_plus + 2s(05_02)_e05_minus - 5s(05_02)_e05_plus + 3s(05_03)_e05_minus - 5s(05_03)_e05_plus + 4s(05_04)_e05_minus - 5s(05_04)_e05_plus + 5s(05_06)_e05_minus - 6s(05_06)_e05_plus + 1s(06_01)_e05_minus - 6s(06_01)_e05_plus + 2s(06_02)_e05_minus - 6s(06_02)_e05_plus + 3s(06_03)_e05_minus - 6s(06_03)_e05_plus + 4s(06_04)_e05_minus - 6s(06_04)_e05_plus + 5s(06_05)_e05_minus - 6s(06_05)_e05_plus
+
  77pi_e06(h01) +  77pi_e06(h02) +  77pi_e06(h03) +  77pi_e06(h04) +  77pi_e06(h05) +  77pi_e06(h06) +  77pi_e06(h07) +  77pi_e06(h08) +  77pi_e06(h09) +  77pi_e06(h10) +  77pi_e06(h11) +  77pi_e06(h12) - r <=  0
+
  pi_e06(h01) - p(01_02)_e06 >=  0
  pi_e06(h02) - p(01_03)_e06 >=  0
  pi_e06(h03) + p(01_02)_e06 >=  0
@@ -593,6 +614,7 @@ Subject to
  pi_e06(h10) + p(06_05)_e06 >=  0
  pi_e06(h11) - p(06_04)_e06 >=  0
  pi_e06(h12) - p(06_05)_e06 >=  0
+
  77 p(01_02)_e06 + 77 s(01_02)_e06_plus - 77s(01_02)_e06_minus -f_01_02(e06) >=  0
  77 p(01_03)_e06 + 77 s(01_03)_e06_plus - 77s(01_03)_e06_minus -f_01_03(e06) >=  0
  77 p(01_04)_e06 + 77 s(01_04)_e06_plus - 77s(01_04)_e06_minus -f_01_04(e06) >=  0
@@ -623,8 +645,11 @@ Subject to
  77 p(06_03)_e06 + 77 s(06_03)_e06_plus - 77s(06_03)_e06_minus -f_06_03(e06) >=  0
  77 p(06_04)_e06 + 77 s(06_04)_e06_plus - 77s(06_04)_e06_minus -f_06_04(e06) >=  0
  77 p(06_05)_e06 + 77 s(06_05)_e06_plus - 77s(06_05)_e06_minus -f_06_05(e06) >=  0
- 1s(01_02)_e06_minus - 2s(01_02)_e06_plus + 1s(01_03)_e06_minus - 3s(01_03)_e06_plus + 1s(01_04)_e06_minus - 4s(01_04)_e06_plus + 1s(01_05)_e06_minus - 5s(01_05)_e06_plus + 1s(01_06)_e06_minus - 6s(01_06)_e06_plus + 1s(02_01)_e06_minus - 2s(02_01)_e06_plus + 2s(02_03)_e06_minus - 3s(02_03)_e06_plus + 2s(02_04)_e06_minus - 4s(02_04)_e06_plus + 2s(02_05)_e06_minus - 5s(02_05)_e06_plus + 2s(02_06)_e06_minus - 6s(02_06)_e06_plus + 1s(03_01)_e06_minus - 3s(03_01)_e06_plus + 2s(03_02)_e06_minus - 3s(03_02)_e06_plus + 3s(03_04)_e06_minus - 4s(03_04)_e06_plus + 3s(03_05)_e06_minus - 5s(03_05)_e06_plus + 3s(03_06)_e06_minus - 6s(03_06)_e06_plus + 1s(04_01)_e06_minus - 4s(04_01)_e06_plus + 2s(04_02)_e06_minus - 4s(04_02)_e06_plus + 3s(04_03)_e06_minus - 4s(04_03)_e06_plus + 4s(04_05)_e06_minus - 5s(04_05)_e06_plus + 4s(04_06)_e06_minus - 6s(04_06)_e06_plus + 1s(05_01)_e06_minus - 5s(05_01)_e06_plus + 2s(05_02)_e06_minus - 5s(05_02)_e06_plus + 3s(05_03)_e06_minus - 5s(05_03)_e06_plus + 4s(05_04)_e06_minus - 5s(05_04)_e06_plus + 5s(05_06)_e06_minus - 6s(05_06)_e06_plus + 1s(06_01)_e06_minus - 6s(06_01)_e06_plus + 2s(06_02)_e06_minus - 6s(06_02)_e06_plus + 3s(06_03)_e06_minus - 6s(06_03)_e06_plus + 4s(06_04)_e06_minus - 6s(06_04)_e06_plus + 5s(06_05)_e06_minus - 6s(06_05)_e06_plus >= 0
+
+ 1s(01_02)_e06_minus - 2s(01_02)_e06_plus + 1s(01_03)_e06_minus - 3s(01_03)_e06_plus + 1s(01_04)_e06_minus - 4s(01_04)_e06_plus + 1s(01_05)_e06_minus - 5s(01_05)_e06_plus + 1s(01_06)_e06_minus - 6s(01_06)_e06_plus + 1s(02_01)_e06_minus - 2s(02_01)_e06_plus + 2s(02_03)_e06_minus - 3s(02_03)_e06_plus + 2s(02_04)_e06_minus - 4s(02_04)_e06_plus + 2s(02_05)_e06_minus - 5s(02_05)_e06_plus + 2s(02_06)_e06_minus - 6s(02_06)_e06_plus + 1s(03_01)_e06_minus - 3s(03_01)_e06_plus + 2s(03_02)_e06_minus - 3s(03_02)_e06_plus + 3s(03_04)_e06_minus - 4s(03_04)_e06_plus + 3s(03_05)_e06_minus - 5s(03_05)_e06_plus + 3s(03_06)_e06_minus - 6s(03_06)_e06_plus + 1s(04_01)_e06_minus - 4s(04_01)_e06_plus + 2s(04_02)_e06_minus - 4s(04_02)_e06_plus + 3s(04_03)_e06_minus - 4s(04_03)_e06_plus + 4s(04_05)_e06_minus - 5s(04_05)_e06_plus + 4s(04_06)_e06_minus - 6s(04_06)_e06_plus + 1s(05_01)_e06_minus - 5s(05_01)_e06_plus + 2s(05_02)_e06_minus - 5s(05_02)_e06_plus + 3s(05_03)_e06_minus - 5s(05_03)_e06_plus + 4s(05_04)_e06_minus - 5s(05_04)_e06_plus + 5s(05_06)_e06_minus - 6s(05_06)_e06_plus + 1s(06_01)_e06_minus - 6s(06_01)_e06_plus + 2s(06_02)_e06_minus - 6s(06_02)_e06_plus + 3s(06_03)_e06_minus - 6s(06_03)_e06_plus + 4s(06_04)_e06_minus - 6s(06_04)_e06_plus + 5s(06_05)_e06_minus - 6s(06_05)_e06_plus
+
  77pi_e07(h01) +  77pi_e07(h02) +  77pi_e07(h03) +  77pi_e07(h04) +  77pi_e07(h05) +  77pi_e07(h06) +  77pi_e07(h07) +  77pi_e07(h08) +  77pi_e07(h09) +  77pi_e07(h10) +  77pi_e07(h11) +  77pi_e07(h12) - r <=  0
+
  pi_e07(h01) - p(01_02)_e07 >=  0
  pi_e07(h02) - p(01_03)_e07 >=  0
  pi_e07(h03) + p(01_02)_e07 >=  0
@@ -697,6 +722,7 @@ Subject to
  pi_e07(h10) + p(06_05)_e07 >=  0
  pi_e07(h11) - p(06_04)_e07 >=  0
  pi_e07(h12) - p(06_05)_e07 >=  0
+
  77 p(01_02)_e07 + 77 s(01_02)_e07_plus - 77s(01_02)_e07_minus -f_01_02(e07) >=  0
  77 p(01_03)_e07 + 77 s(01_03)_e07_plus - 77s(01_03)_e07_minus -f_01_03(e07) >=  0
  77 p(01_04)_e07 + 77 s(01_04)_e07_plus - 77s(01_04)_e07_minus -f_01_04(e07) >=  0
@@ -727,8 +753,11 @@ Subject to
  77 p(06_03)_e07 + 77 s(06_03)_e07_plus - 77s(06_03)_e07_minus -f_06_03(e07) >=  0
  77 p(06_04)_e07 + 77 s(06_04)_e07_plus - 77s(06_04)_e07_minus -f_06_04(e07) >=  0
  77 p(06_05)_e07 + 77 s(06_05)_e07_plus - 77s(06_05)_e07_minus -f_06_05(e07) >=  0
- 1s(01_02)_e07_minus - 2s(01_02)_e07_plus + 1s(01_03)_e07_minus - 3s(01_03)_e07_plus + 1s(01_04)_e07_minus - 4s(01_04)_e07_plus + 1s(01_05)_e07_minus - 5s(01_05)_e07_plus + 1s(01_06)_e07_minus - 6s(01_06)_e07_plus + 1s(02_01)_e07_minus - 2s(02_01)_e07_plus + 2s(02_03)_e07_minus - 3s(02_03)_e07_plus + 2s(02_04)_e07_minus - 4s(02_04)_e07_plus + 2s(02_05)_e07_minus - 5s(02_05)_e07_plus + 2s(02_06)_e07_minus - 6s(02_06)_e07_plus + 1s(03_01)_e07_minus - 3s(03_01)_e07_plus + 2s(03_02)_e07_minus - 3s(03_02)_e07_plus + 3s(03_04)_e07_minus - 4s(03_04)_e07_plus + 3s(03_05)_e07_minus - 5s(03_05)_e07_plus + 3s(03_06)_e07_minus - 6s(03_06)_e07_plus + 1s(04_01)_e07_minus - 4s(04_01)_e07_plus + 2s(04_02)_e07_minus - 4s(04_02)_e07_plus + 3s(04_03)_e07_minus - 4s(04_03)_e07_plus + 4s(04_05)_e07_minus - 5s(04_05)_e07_plus + 4s(04_06)_e07_minus - 6s(04_06)_e07_plus + 1s(05_01)_e07_minus - 5s(05_01)_e07_plus + 2s(05_02)_e07_minus - 5s(05_02)_e07_plus + 3s(05_03)_e07_minus - 5s(05_03)_e07_plus + 4s(05_04)_e07_minus - 5s(05_04)_e07_plus + 5s(05_06)_e07_minus - 6s(05_06)_e07_plus + 1s(06_01)_e07_minus - 6s(06_01)_e07_plus + 2s(06_02)_e07_minus - 6s(06_02)_e07_plus + 3s(06_03)_e07_minus - 6s(06_03)_e07_plus + 4s(06_04)_e07_minus - 6s(06_04)_e07_plus + 5s(06_05)_e07_minus - 6s(06_05)_e07_plus >= 0
+
+ 1s(01_02)_e07_minus - 2s(01_02)_e07_plus + 1s(01_03)_e07_minus - 3s(01_03)_e07_plus + 1s(01_04)_e07_minus - 4s(01_04)_e07_plus + 1s(01_05)_e07_minus - 5s(01_05)_e07_plus + 1s(01_06)_e07_minus - 6s(01_06)_e07_plus + 1s(02_01)_e07_minus - 2s(02_01)_e07_plus + 2s(02_03)_e07_minus - 3s(02_03)_e07_plus + 2s(02_04)_e07_minus - 4s(02_04)_e07_plus + 2s(02_05)_e07_minus - 5s(02_05)_e07_plus + 2s(02_06)_e07_minus - 6s(02_06)_e07_plus + 1s(03_01)_e07_minus - 3s(03_01)_e07_plus + 2s(03_02)_e07_minus - 3s(03_02)_e07_plus + 3s(03_04)_e07_minus - 4s(03_04)_e07_plus + 3s(03_05)_e07_minus - 5s(03_05)_e07_plus + 3s(03_06)_e07_minus - 6s(03_06)_e07_plus + 1s(04_01)_e07_minus - 4s(04_01)_e07_plus + 2s(04_02)_e07_minus - 4s(04_02)_e07_plus + 3s(04_03)_e07_minus - 4s(04_03)_e07_plus + 4s(04_05)_e07_minus - 5s(04_05)_e07_plus + 4s(04_06)_e07_minus - 6s(04_06)_e07_plus + 1s(05_01)_e07_minus - 5s(05_01)_e07_plus + 2s(05_02)_e07_minus - 5s(05_02)_e07_plus + 3s(05_03)_e07_minus - 5s(05_03)_e07_plus + 4s(05_04)_e07_minus - 5s(05_04)_e07_plus + 5s(05_06)_e07_minus - 6s(05_06)_e07_plus + 1s(06_01)_e07_minus - 6s(06_01)_e07_plus + 2s(06_02)_e07_minus - 6s(06_02)_e07_plus + 3s(06_03)_e07_minus - 6s(06_03)_e07_plus + 4s(06_04)_e07_minus - 6s(06_04)_e07_plus + 5s(06_05)_e07_minus - 6s(06_05)_e07_plus
+
  77pi_e08(h01) +  77pi_e08(h02) +  77pi_e08(h03) +  77pi_e08(h04) +  77pi_e08(h05) +  77pi_e08(h06) +  77pi_e08(h07) +  77pi_e08(h08) +  77pi_e08(h09) +  77pi_e08(h10) +  77pi_e08(h11) +  77pi_e08(h12) - r <=  0
+
  pi_e08(h01) - p(01_02)_e08 >=  0
  pi_e08(h02) - p(01_03)_e08 >=  0
  pi_e08(h03) + p(01_02)_e08 >=  0
@@ -801,6 +830,7 @@ Subject to
  pi_e08(h10) + p(06_05)_e08 >=  0
  pi_e08(h11) - p(06_04)_e08 >=  0
  pi_e08(h12) - p(06_05)_e08 >=  0
+
  77 p(01_02)_e08 + 77 s(01_02)_e08_plus - 77s(01_02)_e08_minus -f_01_02(e08) >=  0
  77 p(01_03)_e08 + 77 s(01_03)_e08_plus - 77s(01_03)_e08_minus -f_01_03(e08) >=  0
  77 p(01_04)_e08 + 77 s(01_04)_e08_plus - 77s(01_04)_e08_minus -f_01_04(e08) >=  0
@@ -831,8 +861,11 @@ Subject to
  77 p(06_03)_e08 + 77 s(06_03)_e08_plus - 77s(06_03)_e08_minus -f_06_03(e08) >=  0
  77 p(06_04)_e08 + 77 s(06_04)_e08_plus - 77s(06_04)_e08_minus -f_06_04(e08) >=  0
  77 p(06_05)_e08 + 77 s(06_05)_e08_plus - 77s(06_05)_e08_minus -f_06_05(e08) >=  0
- 1s(01_02)_e08_minus - 2s(01_02)_e08_plus + 1s(01_03)_e08_minus - 3s(01_03)_e08_plus + 1s(01_04)_e08_minus - 4s(01_04)_e08_plus + 1s(01_05)_e08_minus - 5s(01_05)_e08_plus + 1s(01_06)_e08_minus - 6s(01_06)_e08_plus + 1s(02_01)_e08_minus - 2s(02_01)_e08_plus + 2s(02_03)_e08_minus - 3s(02_03)_e08_plus + 2s(02_04)_e08_minus - 4s(02_04)_e08_plus + 2s(02_05)_e08_minus - 5s(02_05)_e08_plus + 2s(02_06)_e08_minus - 6s(02_06)_e08_plus + 1s(03_01)_e08_minus - 3s(03_01)_e08_plus + 2s(03_02)_e08_minus - 3s(03_02)_e08_plus + 3s(03_04)_e08_minus - 4s(03_04)_e08_plus + 3s(03_05)_e08_minus - 5s(03_05)_e08_plus + 3s(03_06)_e08_minus - 6s(03_06)_e08_plus + 1s(04_01)_e08_minus - 4s(04_01)_e08_plus + 2s(04_02)_e08_minus - 4s(04_02)_e08_plus + 3s(04_03)_e08_minus - 4s(04_03)_e08_plus + 4s(04_05)_e08_minus - 5s(04_05)_e08_plus + 4s(04_06)_e08_minus - 6s(04_06)_e08_plus + 1s(05_01)_e08_minus - 5s(05_01)_e08_plus + 2s(05_02)_e08_minus - 5s(05_02)_e08_plus + 3s(05_03)_e08_minus - 5s(05_03)_e08_plus + 4s(05_04)_e08_minus - 5s(05_04)_e08_plus + 5s(05_06)_e08_minus - 6s(05_06)_e08_plus + 1s(06_01)_e08_minus - 6s(06_01)_e08_plus + 2s(06_02)_e08_minus - 6s(06_02)_e08_plus + 3s(06_03)_e08_minus - 6s(06_03)_e08_plus + 4s(06_04)_e08_minus - 6s(06_04)_e08_plus + 5s(06_05)_e08_minus - 6s(06_05)_e08_plus >= 0
+
+ 1s(01_02)_e08_minus - 2s(01_02)_e08_plus + 1s(01_03)_e08_minus - 3s(01_03)_e08_plus + 1s(01_04)_e08_minus - 4s(01_04)_e08_plus + 1s(01_05)_e08_minus - 5s(01_05)_e08_plus + 1s(01_06)_e08_minus - 6s(01_06)_e08_plus + 1s(02_01)_e08_minus - 2s(02_01)_e08_plus + 2s(02_03)_e08_minus - 3s(02_03)_e08_plus + 2s(02_04)_e08_minus - 4s(02_04)_e08_plus + 2s(02_05)_e08_minus - 5s(02_05)_e08_plus + 2s(02_06)_e08_minus - 6s(02_06)_e08_plus + 1s(03_01)_e08_minus - 3s(03_01)_e08_plus + 2s(03_02)_e08_minus - 3s(03_02)_e08_plus + 3s(03_04)_e08_minus - 4s(03_04)_e08_plus + 3s(03_05)_e08_minus - 5s(03_05)_e08_plus + 3s(03_06)_e08_minus - 6s(03_06)_e08_plus + 1s(04_01)_e08_minus - 4s(04_01)_e08_plus + 2s(04_02)_e08_minus - 4s(04_02)_e08_plus + 3s(04_03)_e08_minus - 4s(04_03)_e08_plus + 4s(04_05)_e08_minus - 5s(04_05)_e08_plus + 4s(04_06)_e08_minus - 6s(04_06)_e08_plus + 1s(05_01)_e08_minus - 5s(05_01)_e08_plus + 2s(05_02)_e08_minus - 5s(05_02)_e08_plus + 3s(05_03)_e08_minus - 5s(05_03)_e08_plus + 4s(05_04)_e08_minus - 5s(05_04)_e08_plus + 5s(05_06)_e08_minus - 6s(05_06)_e08_plus + 1s(06_01)_e08_minus - 6s(06_01)_e08_plus + 2s(06_02)_e08_minus - 6s(06_02)_e08_plus + 3s(06_03)_e08_minus - 6s(06_03)_e08_plus + 4s(06_04)_e08_minus - 6s(06_04)_e08_plus + 5s(06_05)_e08_minus - 6s(06_05)_e08_plus
+
  77pi_e09(h01) +  77pi_e09(h02) +  77pi_e09(h03) +  77pi_e09(h04) +  77pi_e09(h05) +  77pi_e09(h06) +  77pi_e09(h07) +  77pi_e09(h08) +  77pi_e09(h09) +  77pi_e09(h10) +  77pi_e09(h11) +  77pi_e09(h12) - r <=  0
+
  pi_e09(h01) - p(01_02)_e09 >=  0
  pi_e09(h02) - p(01_03)_e09 >=  0
  pi_e09(h03) + p(01_02)_e09 >=  0
@@ -905,6 +938,7 @@ Subject to
  pi_e09(h10) + p(06_05)_e09 >=  0
  pi_e09(h11) - p(06_04)_e09 >=  0
  pi_e09(h12) - p(06_05)_e09 >=  0
+
  77 p(01_02)_e09 + 77 s(01_02)_e09_plus - 77s(01_02)_e09_minus -f_01_02(e09) >=  0
  77 p(01_03)_e09 + 77 s(01_03)_e09_plus - 77s(01_03)_e09_minus -f_01_03(e09) >=  0
  77 p(01_04)_e09 + 77 s(01_04)_e09_plus - 77s(01_04)_e09_minus -f_01_04(e09) >=  0
@@ -935,8 +969,11 @@ Subject to
  77 p(06_03)_e09 + 77 s(06_03)_e09_plus - 77s(06_03)_e09_minus -f_06_03(e09) >=  0
  77 p(06_04)_e09 + 77 s(06_04)_e09_plus - 77s(06_04)_e09_minus -f_06_04(e09) >=  0
  77 p(06_05)_e09 + 77 s(06_05)_e09_plus - 77s(06_05)_e09_minus -f_06_05(e09) >=  0
- 1s(01_02)_e09_minus - 2s(01_02)_e09_plus + 1s(01_03)_e09_minus - 3s(01_03)_e09_plus + 1s(01_04)_e09_minus - 4s(01_04)_e09_plus + 1s(01_05)_e09_minus - 5s(01_05)_e09_plus + 1s(01_06)_e09_minus - 6s(01_06)_e09_plus + 1s(02_01)_e09_minus - 2s(02_01)_e09_plus + 2s(02_03)_e09_minus - 3s(02_03)_e09_plus + 2s(02_04)_e09_minus - 4s(02_04)_e09_plus + 2s(02_05)_e09_minus - 5s(02_05)_e09_plus + 2s(02_06)_e09_minus - 6s(02_06)_e09_plus + 1s(03_01)_e09_minus - 3s(03_01)_e09_plus + 2s(03_02)_e09_minus - 3s(03_02)_e09_plus + 3s(03_04)_e09_minus - 4s(03_04)_e09_plus + 3s(03_05)_e09_minus - 5s(03_05)_e09_plus + 3s(03_06)_e09_minus - 6s(03_06)_e09_plus + 1s(04_01)_e09_minus - 4s(04_01)_e09_plus + 2s(04_02)_e09_minus - 4s(04_02)_e09_plus + 3s(04_03)_e09_minus - 4s(04_03)_e09_plus + 4s(04_05)_e09_minus - 5s(04_05)_e09_plus + 4s(04_06)_e09_minus - 6s(04_06)_e09_plus + 1s(05_01)_e09_minus - 5s(05_01)_e09_plus + 2s(05_02)_e09_minus - 5s(05_02)_e09_plus + 3s(05_03)_e09_minus - 5s(05_03)_e09_plus + 4s(05_04)_e09_minus - 5s(05_04)_e09_plus + 5s(05_06)_e09_minus - 6s(05_06)_e09_plus + 1s(06_01)_e09_minus - 6s(06_01)_e09_plus + 2s(06_02)_e09_minus - 6s(06_02)_e09_plus + 3s(06_03)_e09_minus - 6s(06_03)_e09_plus + 4s(06_04)_e09_minus - 6s(06_04)_e09_plus + 5s(06_05)_e09_minus - 6s(06_05)_e09_plus >= 0
+
+ 1s(01_02)_e09_minus - 2s(01_02)_e09_plus + 1s(01_03)_e09_minus - 3s(01_03)_e09_plus + 1s(01_04)_e09_minus - 4s(01_04)_e09_plus + 1s(01_05)_e09_minus - 5s(01_05)_e09_plus + 1s(01_06)_e09_minus - 6s(01_06)_e09_plus + 1s(02_01)_e09_minus - 2s(02_01)_e09_plus + 2s(02_03)_e09_minus - 3s(02_03)_e09_plus + 2s(02_04)_e09_minus - 4s(02_04)_e09_plus + 2s(02_05)_e09_minus - 5s(02_05)_e09_plus + 2s(02_06)_e09_minus - 6s(02_06)_e09_plus + 1s(03_01)_e09_minus - 3s(03_01)_e09_plus + 2s(03_02)_e09_minus - 3s(03_02)_e09_plus + 3s(03_04)_e09_minus - 4s(03_04)_e09_plus + 3s(03_05)_e09_minus - 5s(03_05)_e09_plus + 3s(03_06)_e09_minus - 6s(03_06)_e09_plus + 1s(04_01)_e09_minus - 4s(04_01)_e09_plus + 2s(04_02)_e09_minus - 4s(04_02)_e09_plus + 3s(04_03)_e09_minus - 4s(04_03)_e09_plus + 4s(04_05)_e09_minus - 5s(04_05)_e09_plus + 4s(04_06)_e09_minus - 6s(04_06)_e09_plus + 1s(05_01)_e09_minus - 5s(05_01)_e09_plus + 2s(05_02)_e09_minus - 5s(05_02)_e09_plus + 3s(05_03)_e09_minus - 5s(05_03)_e09_plus + 4s(05_04)_e09_minus - 5s(05_04)_e09_plus + 5s(05_06)_e09_minus - 6s(05_06)_e09_plus + 1s(06_01)_e09_minus - 6s(06_01)_e09_plus + 2s(06_02)_e09_minus - 6s(06_02)_e09_plus + 3s(06_03)_e09_minus - 6s(06_03)_e09_plus + 4s(06_04)_e09_minus - 6s(06_04)_e09_plus + 5s(06_05)_e09_minus - 6s(06_05)_e09_plus
+
  77pi_e10(h01) +  77pi_e10(h02) +  77pi_e10(h03) +  77pi_e10(h04) +  77pi_e10(h05) +  77pi_e10(h06) +  77pi_e10(h07) +  77pi_e10(h08) +  77pi_e10(h09) +  77pi_e10(h10) +  77pi_e10(h11) +  77pi_e10(h12) - r <=  0
+
  pi_e10(h01) - p(01_02)_e10 >=  0
  pi_e10(h02) - p(01_03)_e10 >=  0
  pi_e10(h03) + p(01_02)_e10 >=  0
@@ -1009,6 +1046,7 @@ Subject to
  pi_e10(h10) + p(06_05)_e10 >=  0
  pi_e10(h11) - p(06_04)_e10 >=  0
  pi_e10(h12) - p(06_05)_e10 >=  0
+
  77 p(01_02)_e10 + 77 s(01_02)_e10_plus - 77s(01_02)_e10_minus -f_01_02(e10) >=  0
  77 p(01_03)_e10 + 77 s(01_03)_e10_plus - 77s(01_03)_e10_minus -f_01_03(e10) >=  0
  77 p(01_04)_e10 + 77 s(01_04)_e10_plus - 77s(01_04)_e10_minus -f_01_04(e10) >=  0
@@ -1039,8 +1077,11 @@ Subject to
  77 p(06_03)_e10 + 77 s(06_03)_e10_plus - 77s(06_03)_e10_minus -f_06_03(e10) >=  0
  77 p(06_04)_e10 + 77 s(06_04)_e10_plus - 77s(06_04)_e10_minus -f_06_04(e10) >=  0
  77 p(06_05)_e10 + 77 s(06_05)_e10_plus - 77s(06_05)_e10_minus -f_06_05(e10) >=  0
- 1s(01_02)_e10_minus - 2s(01_02)_e10_plus + 1s(01_03)_e10_minus - 3s(01_03)_e10_plus + 1s(01_04)_e10_minus - 4s(01_04)_e10_plus + 1s(01_05)_e10_minus - 5s(01_05)_e10_plus + 1s(01_06)_e10_minus - 6s(01_06)_e10_plus + 1s(02_01)_e10_minus - 2s(02_01)_e10_plus + 2s(02_03)_e10_minus - 3s(02_03)_e10_plus + 2s(02_04)_e10_minus - 4s(02_04)_e10_plus + 2s(02_05)_e10_minus - 5s(02_05)_e10_plus + 2s(02_06)_e10_minus - 6s(02_06)_e10_plus + 1s(03_01)_e10_minus - 3s(03_01)_e10_plus + 2s(03_02)_e10_minus - 3s(03_02)_e10_plus + 3s(03_04)_e10_minus - 4s(03_04)_e10_plus + 3s(03_05)_e10_minus - 5s(03_05)_e10_plus + 3s(03_06)_e10_minus - 6s(03_06)_e10_plus + 1s(04_01)_e10_minus - 4s(04_01)_e10_plus + 2s(04_02)_e10_minus - 4s(04_02)_e10_plus + 3s(04_03)_e10_minus - 4s(04_03)_e10_plus + 4s(04_05)_e10_minus - 5s(04_05)_e10_plus + 4s(04_06)_e10_minus - 6s(04_06)_e10_plus + 1s(05_01)_e10_minus - 5s(05_01)_e10_plus + 2s(05_02)_e10_minus - 5s(05_02)_e10_plus + 3s(05_03)_e10_minus - 5s(05_03)_e10_plus + 4s(05_04)_e10_minus - 5s(05_04)_e10_plus + 5s(05_06)_e10_minus - 6s(05_06)_e10_plus + 1s(06_01)_e10_minus - 6s(06_01)_e10_plus + 2s(06_02)_e10_minus - 6s(06_02)_e10_plus + 3s(06_03)_e10_minus - 6s(06_03)_e10_plus + 4s(06_04)_e10_minus - 6s(06_04)_e10_plus + 5s(06_05)_e10_minus - 6s(06_05)_e10_plus >= 0
+
+ 1s(01_02)_e10_minus - 2s(01_02)_e10_plus + 1s(01_03)_e10_minus - 3s(01_03)_e10_plus + 1s(01_04)_e10_minus - 4s(01_04)_e10_plus + 1s(01_05)_e10_minus - 5s(01_05)_e10_plus + 1s(01_06)_e10_minus - 6s(01_06)_e10_plus + 1s(02_01)_e10_minus - 2s(02_01)_e10_plus + 2s(02_03)_e10_minus - 3s(02_03)_e10_plus + 2s(02_04)_e10_minus - 4s(02_04)_e10_plus + 2s(02_05)_e10_minus - 5s(02_05)_e10_plus + 2s(02_06)_e10_minus - 6s(02_06)_e10_plus + 1s(03_01)_e10_minus - 3s(03_01)_e10_plus + 2s(03_02)_e10_minus - 3s(03_02)_e10_plus + 3s(03_04)_e10_minus - 4s(03_04)_e10_plus + 3s(03_05)_e10_minus - 5s(03_05)_e10_plus + 3s(03_06)_e10_minus - 6s(03_06)_e10_plus + 1s(04_01)_e10_minus - 4s(04_01)_e10_plus + 2s(04_02)_e10_minus - 4s(04_02)_e10_plus + 3s(04_03)_e10_minus - 4s(04_03)_e10_plus + 4s(04_05)_e10_minus - 5s(04_05)_e10_plus + 4s(04_06)_e10_minus - 6s(04_06)_e10_plus + 1s(05_01)_e10_minus - 5s(05_01)_e10_plus + 2s(05_02)_e10_minus - 5s(05_02)_e10_plus + 3s(05_03)_e10_minus - 5s(05_03)_e10_plus + 4s(05_04)_e10_minus - 5s(05_04)_e10_plus + 5s(05_06)_e10_minus - 6s(05_06)_e10_plus + 1s(06_01)_e10_minus - 6s(06_01)_e10_plus + 2s(06_02)_e10_minus - 6s(06_02)_e10_plus + 3s(06_03)_e10_minus - 6s(06_03)_e10_plus + 4s(06_04)_e10_minus - 6s(06_04)_e10_plus + 5s(06_05)_e10_minus - 6s(06_05)_e10_plus
+
  77pi_e11(h01) +  77pi_e11(h02) +  77pi_e11(h03) +  77pi_e11(h04) +  77pi_e11(h05) +  77pi_e11(h06) +  77pi_e11(h07) +  77pi_e11(h08) +  77pi_e11(h09) +  77pi_e11(h10) +  77pi_e11(h11) +  77pi_e11(h12) - r <=  0
+
  pi_e11(h01) - p(01_02)_e11 >=  0
  pi_e11(h02) - p(01_03)_e11 >=  0
  pi_e11(h03) + p(01_02)_e11 >=  0
@@ -1113,6 +1154,7 @@ Subject to
  pi_e11(h10) + p(06_05)_e11 >=  0
  pi_e11(h11) - p(06_04)_e11 >=  0
  pi_e11(h12) - p(06_05)_e11 >=  0
+
  77 p(01_02)_e11 + 77 s(01_02)_e11_plus - 77s(01_02)_e11_minus -f_01_02(e11) >=  0
  77 p(01_03)_e11 + 77 s(01_03)_e11_plus - 77s(01_03)_e11_minus -f_01_03(e11) >=  0
  77 p(01_04)_e11 + 77 s(01_04)_e11_plus - 77s(01_04)_e11_minus -f_01_04(e11) >=  0
@@ -1143,8 +1185,11 @@ Subject to
  77 p(06_03)_e11 + 77 s(06_03)_e11_plus - 77s(06_03)_e11_minus -f_06_03(e11) >=  0
  77 p(06_04)_e11 + 77 s(06_04)_e11_plus - 77s(06_04)_e11_minus -f_06_04(e11) >=  0
  77 p(06_05)_e11 + 77 s(06_05)_e11_plus - 77s(06_05)_e11_minus -f_06_05(e11) >=  0
- 1s(01_02)_e11_minus - 2s(01_02)_e11_plus + 1s(01_03)_e11_minus - 3s(01_03)_e11_plus + 1s(01_04)_e11_minus - 4s(01_04)_e11_plus + 1s(01_05)_e11_minus - 5s(01_05)_e11_plus + 1s(01_06)_e11_minus - 6s(01_06)_e11_plus + 1s(02_01)_e11_minus - 2s(02_01)_e11_plus + 2s(02_03)_e11_minus - 3s(02_03)_e11_plus + 2s(02_04)_e11_minus - 4s(02_04)_e11_plus + 2s(02_05)_e11_minus - 5s(02_05)_e11_plus + 2s(02_06)_e11_minus - 6s(02_06)_e11_plus + 1s(03_01)_e11_minus - 3s(03_01)_e11_plus + 2s(03_02)_e11_minus - 3s(03_02)_e11_plus + 3s(03_04)_e11_minus - 4s(03_04)_e11_plus + 3s(03_05)_e11_minus - 5s(03_05)_e11_plus + 3s(03_06)_e11_minus - 6s(03_06)_e11_plus + 1s(04_01)_e11_minus - 4s(04_01)_e11_plus + 2s(04_02)_e11_minus - 4s(04_02)_e11_plus + 3s(04_03)_e11_minus - 4s(04_03)_e11_plus + 4s(04_05)_e11_minus - 5s(04_05)_e11_plus + 4s(04_06)_e11_minus - 6s(04_06)_e11_plus + 1s(05_01)_e11_minus - 5s(05_01)_e11_plus + 2s(05_02)_e11_minus - 5s(05_02)_e11_plus + 3s(05_03)_e11_minus - 5s(05_03)_e11_plus + 4s(05_04)_e11_minus - 5s(05_04)_e11_plus + 5s(05_06)_e11_minus - 6s(05_06)_e11_plus + 1s(06_01)_e11_minus - 6s(06_01)_e11_plus + 2s(06_02)_e11_minus - 6s(06_02)_e11_plus + 3s(06_03)_e11_minus - 6s(06_03)_e11_plus + 4s(06_04)_e11_minus - 6s(06_04)_e11_plus + 5s(06_05)_e11_minus - 6s(06_05)_e11_plus >= 0
+
+ 1s(01_02)_e11_minus - 2s(01_02)_e11_plus + 1s(01_03)_e11_minus - 3s(01_03)_e11_plus + 1s(01_04)_e11_minus - 4s(01_04)_e11_plus + 1s(01_05)_e11_minus - 5s(01_05)_e11_plus + 1s(01_06)_e11_minus - 6s(01_06)_e11_plus + 1s(02_01)_e11_minus - 2s(02_01)_e11_plus + 2s(02_03)_e11_minus - 3s(02_03)_e11_plus + 2s(02_04)_e11_minus - 4s(02_04)_e11_plus + 2s(02_05)_e11_minus - 5s(02_05)_e11_plus + 2s(02_06)_e11_minus - 6s(02_06)_e11_plus + 1s(03_01)_e11_minus - 3s(03_01)_e11_plus + 2s(03_02)_e11_minus - 3s(03_02)_e11_plus + 3s(03_04)_e11_minus - 4s(03_04)_e11_plus + 3s(03_05)_e11_minus - 5s(03_05)_e11_plus + 3s(03_06)_e11_minus - 6s(03_06)_e11_plus + 1s(04_01)_e11_minus - 4s(04_01)_e11_plus + 2s(04_02)_e11_minus - 4s(04_02)_e11_plus + 3s(04_03)_e11_minus - 4s(04_03)_e11_plus + 4s(04_05)_e11_minus - 5s(04_05)_e11_plus + 4s(04_06)_e11_minus - 6s(04_06)_e11_plus + 1s(05_01)_e11_minus - 5s(05_01)_e11_plus + 2s(05_02)_e11_minus - 5s(05_02)_e11_plus + 3s(05_03)_e11_minus - 5s(05_03)_e11_plus + 4s(05_04)_e11_minus - 5s(05_04)_e11_plus + 5s(05_06)_e11_minus - 6s(05_06)_e11_plus + 1s(06_01)_e11_minus - 6s(06_01)_e11_plus + 2s(06_02)_e11_minus - 6s(06_02)_e11_plus + 3s(06_03)_e11_minus - 6s(06_03)_e11_plus + 4s(06_04)_e11_minus - 6s(06_04)_e11_plus + 5s(06_05)_e11_minus - 6s(06_05)_e11_plus
+
  77pi_e12(h01) +  77pi_e12(h02) +  77pi_e12(h03) +  77pi_e12(h04) +  77pi_e12(h05) +  77pi_e12(h06) +  77pi_e12(h07) +  77pi_e12(h08) +  77pi_e12(h09) +  77pi_e12(h10) +  77pi_e12(h11) +  77pi_e12(h12) - r <=  0
+
  pi_e12(h01) - p(01_02)_e12 >=  0
  pi_e12(h02) - p(01_03)_e12 >=  0
  pi_e12(h03) + p(01_02)_e12 >=  0
@@ -1217,6 +1262,7 @@ Subject to
  pi_e12(h10) + p(06_05)_e12 >=  0
  pi_e12(h11) - p(06_04)_e12 >=  0
  pi_e12(h12) - p(06_05)_e12 >=  0
+
  77 p(01_02)_e12 + 77 s(01_02)_e12_plus - 77s(01_02)_e12_minus -f_01_02(e12) >=  0
  77 p(01_03)_e12 + 77 s(01_03)_e12_plus - 77s(01_03)_e12_minus -f_01_03(e12) >=  0
  77 p(01_04)_e12 + 77 s(01_04)_e12_plus - 77s(01_04)_e12_minus -f_01_04(e12) >=  0
@@ -1247,7 +1293,9 @@ Subject to
  77 p(06_03)_e12 + 77 s(06_03)_e12_plus - 77s(06_03)_e12_minus -f_06_03(e12) >=  0
  77 p(06_04)_e12 + 77 s(06_04)_e12_plus - 77s(06_04)_e12_minus -f_06_04(e12) >=  0
  77 p(06_05)_e12 + 77 s(06_05)_e12_plus - 77s(06_05)_e12_minus -f_06_05(e12) >=  0
- 1s(01_02)_e12_minus - 2s(01_02)_e12_plus + 1s(01_03)_e12_minus - 3s(01_03)_e12_plus + 1s(01_04)_e12_minus - 4s(01_04)_e12_plus + 1s(01_05)_e12_minus - 5s(01_05)_e12_plus + 1s(01_06)_e12_minus - 6s(01_06)_e12_plus + 1s(02_01)_e12_minus - 2s(02_01)_e12_plus + 2s(02_03)_e12_minus - 3s(02_03)_e12_plus + 2s(02_04)_e12_minus - 4s(02_04)_e12_plus + 2s(02_05)_e12_minus - 5s(02_05)_e12_plus + 2s(02_06)_e12_minus - 6s(02_06)_e12_plus + 1s(03_01)_e12_minus - 3s(03_01)_e12_plus + 2s(03_02)_e12_minus - 3s(03_02)_e12_plus + 3s(03_04)_e12_minus - 4s(03_04)_e12_plus + 3s(03_05)_e12_minus - 5s(03_05)_e12_plus + 3s(03_06)_e12_minus - 6s(03_06)_e12_plus + 1s(04_01)_e12_minus - 4s(04_01)_e12_plus + 2s(04_02)_e12_minus - 4s(04_02)_e12_plus + 3s(04_03)_e12_minus - 4s(04_03)_e12_plus + 4s(04_05)_e12_minus - 5s(04_05)_e12_plus + 4s(04_06)_e12_minus - 6s(04_06)_e12_plus + 1s(05_01)_e12_minus - 5s(05_01)_e12_plus + 2s(05_02)_e12_minus - 5s(05_02)_e12_plus + 3s(05_03)_e12_minus - 5s(05_03)_e12_plus + 4s(05_04)_e12_minus - 5s(05_04)_e12_plus + 5s(05_06)_e12_minus - 6s(05_06)_e12_plus + 1s(06_01)_e12_minus - 6s(06_01)_e12_plus + 2s(06_02)_e12_minus - 6s(06_02)_e12_plus + 3s(06_03)_e12_minus - 6s(06_03)_e12_plus + 4s(06_04)_e12_minus - 6s(06_04)_e12_plus + 5s(06_05)_e12_minus - 6s(06_05)_e12_plus >= 0
+
+ 1s(01_02)_e12_minus - 2s(01_02)_e12_plus + 1s(01_03)_e12_minus - 3s(01_03)_e12_plus + 1s(01_04)_e12_minus - 4s(01_04)_e12_plus + 1s(01_05)_e12_minus - 5s(01_05)_e12_plus + 1s(01_06)_e12_minus - 6s(01_06)_e12_plus + 1s(02_01)_e12_minus - 2s(02_01)_e12_plus + 2s(02_03)_e12_minus - 3s(02_03)_e12_plus + 2s(02_04)_e12_minus - 4s(02_04)_e12_plus + 2s(02_05)_e12_minus - 5s(02_05)_e12_plus + 2s(02_06)_e12_minus - 6s(02_06)_e12_plus + 1s(03_01)_e12_minus - 3s(03_01)_e12_plus + 2s(03_02)_e12_minus - 3s(03_02)_e12_plus + 3s(03_04)_e12_minus - 4s(03_04)_e12_plus + 3s(03_05)_e12_minus - 5s(03_05)_e12_plus + 3s(03_06)_e12_minus - 6s(03_06)_e12_plus + 1s(04_01)_e12_minus - 4s(04_01)_e12_plus + 2s(04_02)_e12_minus - 4s(04_02)_e12_plus + 3s(04_03)_e12_minus - 4s(04_03)_e12_plus + 4s(04_05)_e12_minus - 5s(04_05)_e12_plus + 4s(04_06)_e12_minus - 6s(04_06)_e12_plus + 1s(05_01)_e12_minus - 5s(05_01)_e12_plus + 2s(05_02)_e12_minus - 5s(05_02)_e12_plus + 3s(05_03)_e12_minus - 5s(05_03)_e12_plus + 4s(05_04)_e12_minus - 5s(05_04)_e12_plus + 5s(05_06)_e12_minus - 6s(05_06)_e12_plus + 1s(06_01)_e12_minus - 6s(06_01)_e12_plus + 2s(06_02)_e12_minus - 6s(06_02)_e12_plus + 3s(06_03)_e12_minus - 6s(06_03)_e12_plus + 4s(06_04)_e12_minus - 6s(06_04)_e12_plus + 5s(06_05)_e12_minus - 6s(06_05)_e12_plus
+
  f_01_02(e01) - f_01_02(e03) + f_01_02(e02) - f_01_02(e05)  =  1
  f_01_03(e01) - f_01_03(e03) + f_01_03(e02) - f_01_03(e05)  =  1
  f_01_04(e01) - f_01_04(e03) + f_01_04(e02) - f_01_04(e05)  =  1
