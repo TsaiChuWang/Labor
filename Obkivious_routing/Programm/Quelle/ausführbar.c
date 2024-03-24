@@ -23,14 +23,14 @@ int main(void){
     fprintf(dateizeiger,"min r\n");
 	fprintf(dateizeiger,"Subject to \n");
 
-    for(int kant_eins=1; kant_eins<=ANZAHL_KANTEN; kant_eins++){
+    for(int kant_eins=1; kant_eins<=ANZAHL_KANTEN; kant_eins++)
         for(int kant_zwei=1; kant_zwei<=ANZAHL_KANTEN; kant_zwei++){
             fprintf(dateizeiger, "%d pi_e%02d(h%02d)", KAPAZITÄT, kant_eins, kant_zwei);
             if(kant_zwei == ANZAHL_KANTEN)
                 fprintf(dateizeiger, " <= r\n");
             else fprintf(dateizeiger, " + ");
         }
-    }
+    
 
     fprintf(dateizeiger, "\n\n");
 
@@ -84,7 +84,6 @@ int main(void){
             }
         }
     
-
     fprintf(dateizeiger, "\n");
 
     // Flow conservation  : Zuberbeitung
@@ -150,7 +149,27 @@ int main(void){
                     fprintf(dateizeiger, " =  0 \n");
                     schalter = 0;
                 }
-                
+
+        fprintf(dateizeiger, "\n");
+    }
+
+    // Bounds
+    fprintf(dateizeiger, "\n\nBounds\n\n");
+    for(int kant_eins=1; kant_eins<=ANZAHL_KANTEN; kant_eins++)
+        for(int kant_zwei=1; kant_zwei<=ANZAHL_KANTEN; kant_zwei++)
+            fprintf(dateizeiger, "pi_e%02d(h%02d) >= 0\n", kant_eins, kant_zwei);
+
+    fprintf(dateizeiger, "\n\n");
+
+    for(int kant=1; kant<=ANZAHL_KANTEN; kant++){
+        for(int knote_i = 1; knote_i<=ANZAHL_KNOTEN; knote_i++)
+            for(int knote_j = 1; knote_j<=ANZAHL_KNOTEN; knote_j++)
+                if(knote_i != knote_j){
+                    fprintf(dateizeiger, "s_e%02d_plus(%02d_%02d)  >= 0\n", kant, knote_i, knote_j);
+                    fprintf(dateizeiger, "s_e%02d_minus(%02d_%02d) >= 0\n", kant, knote_i, knote_j);
+                    fprintf(dateizeiger, "f_%02d_%02d(e%02d)       >= 0\n", knote_i, knote_j, kant);
+                    fprintf(dateizeiger, "f_%02d_%02d(e%02d)       <= 1\n", knote_i, knote_j, kant);
+                }
         fprintf(dateizeiger, "\n");
     }
 	
