@@ -35,14 +35,37 @@ int main(void){
     fprintf(dateizeiger, "\n\n");
 
     // Constraints 1: \forall i,j\in N,i\neq j p_e(i,j)+s^+_e(i,j)-s^-_e(i,j)=f_{ij}(e)/cap(e)
-    for(int kant=1; kant<=ANZAHL_KANTEN; kant++){
-        for(int knote_i = 1; knote_i<ANZAHL_KNOTEN; knote_i++)
-            for(int knote_j = 1; knote_j<ANZAHL_KNOTEN; knote_j++)
+    for(int kant=1; kant<=ANZAHL_KANTEN; kant++){ // kant = e
+        for(int knote_i = 1; knote_i<ANZAHL_KNOTEN; knote_i++) //knote_i = i
+            for(int knote_j = 1; knote_j<ANZAHL_KNOTEN; knote_j++)  // knote_j = j
                 if(knote_i != knote_j)
                     fprintf(dateizeiger, "%d p_e%02d(%02d_%02d) + %d s_e%02d_plus(%02d_%02d) - %d s_e%02d_minus(%02d_%02d) -f_%02d_%02d(e%02d) >= 0\n", KAPAZITÄT, kant, knote_i, knote_j, KAPAZITÄT, kant, knote_i, knote_j, KAPAZITÄT, kant, knote_i, knote_j, knote_i, knote_j, kant);
         fprintf(dateizeiger, "\n");
     }
 
+    fprintf(dateizeiger, "\n\n");
+
+    // Constriants 2 : \pi_e(edge-of(a)) +p_e(i,j)-p_e(i,k)\geq0
+    for(int kant=1; kant<=ANZAHL_KANTEN; kant++)
+        for(int knote_i = 1; knote_i<ANZAHL_KNOTEN; knote_i++)  { //knote_i = i
+            int kant_h = 1; // kant_h = h
+            for(int knote_j = 1; knote_j<ANZAHL_KNOTEN; knote_j++)  // knote_j = j
+                for(int knote_k = 1; knote_k<ANZAHL_KNOTEN; knote_k++)    // knote_k = k
+                    if((knote_j != knote_k)&& (BOGEN[knote_j-1][knote_k-1]==RICHTIG)){
+                        if((knote_i != knote_k) && (knote_i != knote_k)){
+                            fprintf(dateizeiger, "pi_e%02d(h%02d) + p_e%02d(%02d_%02d) - p_e%02d(%02d_%02d) >= 0\n", kant, kant_h, kant, knote_i, knote_j, kant, knote_i, knote_k);
+                            kant_h ++;
+                        }else if(knote_i != knote_j){
+                            fprintf(dateizeiger, "pi_e%02d(h%02d) + p_e%02d(%02d_%02d) >= 0\n", kant, kant_h, kant, knote_i, knote_j);
+                            kant_h ++;
+                        }else if(knote_i != knote_k){
+                            fprintf(dateizeiger, "pi_e%02d(h%02d) - p_e%02d(%02d_%02d) >= 0\n", kant, kant_h, kant, knote_i, knote_k);
+                            kant_h ++;
+                        }
+					}
+            fprintf(dateizeiger, "\n");
+        }
+    
 
     // Speichern Sie die Textdatei
     fprintf(dateizeiger,"End\n");
