@@ -1,12 +1,21 @@
 #define ALLE_GLEICHE_KAPAZITÄT
 
-#define NSFNET
+#define ELF_KNOTEN_COST239
 
 #ifdef EINS
 	#include "../Enthalten/Erstes_Modul.h"   // MATERIAL
 #endif
 #ifdef NSFNET
 	#include "../Enthalten/NSFNET.h"   // NSFNET
+#endif
+#ifdef USA26
+	#include "../Enthalten/USA-26.h"   // USA26
+#endif
+#ifdef USA28
+	#include "../Enthalten/USA-28.h"   // USA28
+#endif
+#ifdef ELF_KNOTEN_COST239
+	#include "../Enthalten/ELF_KNOTEN_COST239.h"   // 11-node cost 239
 #endif
 
 #include "../Enthalten/Aufbau.h"
