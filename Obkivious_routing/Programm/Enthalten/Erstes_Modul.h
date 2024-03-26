@@ -9,6 +9,8 @@
     #define KAPAZITÄT 100
 #endif
 
+#define MAX_NAME_LÄNGE 50
+
 #define ERSTES_MODUL
 #ifdef ERSTES_MODUL
 

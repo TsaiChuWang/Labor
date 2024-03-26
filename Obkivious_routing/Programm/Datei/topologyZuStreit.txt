@@ -1,0 +1,25 @@
+case 7:
+	streit.DATEI_NAME = "SANReN";
+
+	streit.ANZAHL_KANTEN = 14;
+	streit.ANZAHL_KNOTEN = 7;
+
+	streit.GLEICHE_KAPAZITÄT = 462;
+
+	int topology_7[7][7] =
+		{{0,1,0,0,0,0,1},
+		 {1,0,1,0,0,0,0},
+		 {0,1,0,1,0,0,0},
+		 {0,0,1,0,1,0,0},
+		 {0,0,0,1,0,1,0},
+		 {0,0,0,0,1,0,1},
+		 {1,0,0,0,0,1,0}};
+
+	streit.BOGEN = bereichkopieren(streit.ANZAHL_KNOTEN, topology_7);
+	streit.LISTE = bereichkopieren(streit.ANZAHL_KNOTEN, topology_7);
+
+	break;
+
+-------------------------
+if(strcmp(name, "SANReN") == ERFOLG)
+	return 7;
