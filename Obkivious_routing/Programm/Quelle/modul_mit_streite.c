@@ -1,38 +1,43 @@
 #define ALLE_GLEICHE_KAPAZITÄT
 
-#define ELF_KNOTEN_COST239
-
-#ifdef EINS
-	#include "../Enthalten/Erstes_Modul.h"   // MATERIAL
-#endif
-#ifdef NSFNET
-	#include "../Enthalten/NSFNET.h"   // NSFNET
-#endif
-#ifdef USA26
-	#include "../Enthalten/USA-26.h"   // USA26
-#endif
-#ifdef USA28
-	#include "../Enthalten/USA-28.h"   // USA28
-#endif
-#ifdef ELF_KNOTEN_COST239
-	#include "../Enthalten/ELF_KNOTEN_COST239.h"   // 11-node cost 239
-#endif
-
 #include "../Enthalten/Aufbau.h"
+#include "../Enthalten/Streit.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-int main()
+int main(int argc, char *argv[])
 {
-	int kant, kant_andere,i,j,k,knote,h;
-    int schalter;
+	// Drucken Sie die Streiten und Fehlgeschlagen
+	if(argc<2){
+		printf("ERROR : MISSING ARGUMENTS!\n");
+		return FEHLGESCHLAGEN;
+	}
 
-	druckinformationstopologie();
+	printf("Topology : %s [%d]\n", argv[1], zuordnungCode(argv[1]));
+	if(zuordnungCode(argv[1]) == FEHLGESCHLAGEN){
+		printf("ERROR : INVALID ARGUMENTS!\n");
+		return FEHLGESCHLAGEN;
+	}
+
+	// Globale Paraneter erstellen
+	int schalter;
+	struct Streit streit = nehmenStreit(zuordnungCode(argv[1]));
+	
+	char* DATEI_NAME = streit.DATEI_NAME;
+	int ANZAHL_KANTEN = streit.ANZAHL_KANTEN;
+	int ANZAHL_KNOTEN = streit.ANZAHL_KNOTEN;
+
+#ifdef ALLE_GLEICHE_KAPAZITÄT
+	int KAPAZITÄT = streit.GLEICHE_KAPAZITÄT;
+#endif
+
+	int** BOGEN= streit.BOGEN;
+	int** LISTE = streit.LISTE;
 
     // Öffnen Sie die Textdatei
 	FILE *dateizeiger;
-	dateizeiger = fopen("../Datei/"DATEI_NAME".lp","w+");
+	char datei_name[MAX_NAME_LÄNGE];
+	sprintf(datei_name, "../Datei/%s.lp", DATEI_NAME);
+
+	dateizeiger = fopen(datei_name,"w+");
 	fprintf(dateizeiger,"min r\n");
 	fprintf(dateizeiger,"Subject to \n");
 
@@ -184,4 +189,5 @@ int main()
                 }
 
 	fprintf(dateizeiger,"\nEnd\n");
+	// druckinformationstopologie();
 }
