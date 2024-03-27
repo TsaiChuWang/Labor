@@ -17,8 +17,6 @@ struct Streit{
 
     int** BOGEN;
     int** LISTE;
-
-    double gamma; //Gamma
 };
 
 int** bereichkopieren(int anzahl_knoten, int topology[anzahl_knoten][anzahl_knoten]){
