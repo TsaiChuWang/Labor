@@ -17,6 +17,8 @@ struct Streit{
 
     int** BOGEN;
     int** LISTE;
+
+    double gamma; //Gamma
 };
 
 int** bereichkopieren(int anzahl_knoten, int topology[anzahl_knoten][anzahl_knoten]){
@@ -86,7 +88,7 @@ int zuordnungCode(char* name){
     
     if(strcmp(name, "SANReN") == ERFOLG)    // South African National Research Network (SANReN)
 	    return 7;
-        
+
     return FEHLGESCHLAGEN;
 }
 
